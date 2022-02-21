@@ -133,7 +133,7 @@ export class ProfileComponent implements OnInit {
       if (res.status == true) {
         this.toastr.success(res.message);
         this.getItem();
-        this.router.navigate(["/index"]);
+        this.gotoClock();
       } else if (res.status == false) {
         this.toastr.error(res.message);
       }
@@ -145,6 +145,9 @@ export class ProfileComponent implements OnInit {
   }
   gotoHome() {
     this.router.navigate(["/index"]);
+  }
+  gotoClock() {
+    this.router.navigate(["/clock"]);
   }
   rout() {
     window.history.back();

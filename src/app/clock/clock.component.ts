@@ -50,9 +50,9 @@ export class ClockComponent implements OnInit {
   ar2: any;
 
   N: any;
-  lat = 26.9124;
+  lat = -33.865143;
 
-  long = 75.7873;
+  long = 151.209900;
 
   zoom = 7;
 
@@ -74,8 +74,8 @@ export class ClockComponent implements OnInit {
       }
       console.log("hello", this.valu)
 
-      this.id = res.data[1]._id;
-      this.sitecode = res.data[1].site_code;
+      this.id = res.data[1] && res.data[1]._id;
+      this.sitecode = res.data[1] && res.data[1].site_code;
       console.log(this.id)
       console.log(this.sitecode)
     })

@@ -38,7 +38,9 @@ export class IndexComponent implements OnInit {
     if (localStorage.getItem("token") == null) {
 
       this.C = "c";
-      this.router.navigate(["/verify", this.C]);
+      // this.router.navigate(["/verify", this.C]);
+      this.router.navigate(['/sign-in',this.C])
+
     }
     else {
       if (localStorage.getItem("latestToken1") == null) {
@@ -72,31 +74,13 @@ export class IndexComponent implements OnInit {
     }
 
   }
-  // clock() {
-  //   if (localStorage.getItem("latestToken1") == null) {
-  //     if(localStorage.getItem("time12") !== null){
-  //       this.router.navigate(['/clock-in'])
-
-  //     }
-  //     else{
-  //     this.router.navigate(['/clock'])
-  //     }
-  //   }
-  //   else {
-  //     if (localStorage.getItem("time12") == null) {
-  //       this.router.navigate(['/clock-out'])
-  //     }
-  //     else {
-
-  //       this.router.navigate(['/clock-in'])
-  //     }
-  //   }
-  // }
   timesheet() {
     if (localStorage.getItem("token") == null) {
 
       this.T = "t";
-      this.router.navigate(['/verify', this.T])
+      // this.router.navigate(['/verify', this.T])
+      this.router.navigate(['/sign-in',this.T])
+
     }
     else {
       this.router.navigate(['/timesheet'])
@@ -107,7 +91,8 @@ export class IndexComponent implements OnInit {
     if (localStorage.getItem("token") == null) {
 
       this.P = "p";
-      this.router.navigate(['/verify', this.P])
+      // this.router.navigate(['/verify', this.P])
+      this.router.navigate(['/sign-in',this.P])
     }
     else {
       this.router.navigate(['/profile'])
@@ -119,7 +104,9 @@ export class IndexComponent implements OnInit {
     if (localStorage.getItem("token") == null) {
 
       this.B = "b";
-      this.router.navigate(["/verify", this.B]);
+      // this.router.navigate(["/verify", this.B]);
+      this.router.navigate(['/sign-in',this.B])
+
     }
     else {
       this.router.navigate(["/blankpage"]);

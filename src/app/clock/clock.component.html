@@ -7,7 +7,7 @@
           <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt="" (click)="rout()"></a>
         </div>
         <div class="col text-center">
-          <h2 class="text-white fw-600 fs-18 mb-0">Clock</h2>
+          <h2 class="text-white fw-600 fs-18 mb-0">Site Address or Code</h2>
         </div>
       </div>
     </div>
@@ -16,20 +16,12 @@
     <div class="map_box">
       <agm-map [latitude]='lat' [longitude]='long' [zoom]='zoom'>
 
-
-
         <agm-marker *ngFor="let marker of valu" [latitude]="marker.lat" [longitude]="marker.long"
           [markerClickable]="true" (markerClick)="fillAddress(marker)">
-
           <agm-info-window #infoWindow>
-
             {{ marker.site_address }}
-
           </agm-info-window>
-
         </agm-marker>
-
-
 
       </agm-map>
     </div>
@@ -38,11 +30,12 @@
         <div class="col-12 text-center mb-4">
           <form class="" action="" [formGroup]="clockDataForm">
             <div class="form-group position-relative text-start mb-3">
-              <input type="text" id="address" name="address" formControlName="location1"
-                class="form-control shadow-none px-4" placeholder="Choose your location from the map" readonly>
+              <!-- <input type="text" id="address" name="address" formControlName="location1"
+                class="form-control shadow-none px-4" placeholder="Choose your location from the map" readonly> -->
+                <!-- <label>Site Address</label> -->
             </div>
             <div class="form-group position-relative text-start">
-              <input  ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" type="email" id="mail" name="mail" formControlName="address" class="form-control shadow-none px-4"
+              <input  ngx-google-places-autocomplete  (onAddressChange)="handleAddressChange($event)" type="email" id="mail" name="mail" formControlName="address" class="form-control shadow-none px-4"
                 placeholder="Enter Address" #A>
             </div>
 
@@ -50,13 +43,13 @@
               <span class="fs-16 text-muted fw-600">OR</span>
             </div>
             <div class="row justify-content-between">
-              <div class="col-6">
+              <div class="col-12">
                 <div class="form-group position-relative text-start mb-3">
                   <input type="text" id="address" name="address" formControlName="enterCode"
                     class="form-control shadow-none px-4" placeholder="Enter Code" #C>
                 </div>
               </div>
-              <div class="col-6">
+              <!-- <div class="col-6">
                 <div class="form-group position-relative text-start mb-3" data-bs-toggle="modal"
                   data-bs-target="#exampleModal6">
                   <button type="button" *ngIf="!scan" (click)="scan = true" capture="environment"
@@ -88,8 +81,8 @@
                   </div>
                 </div>
 
-              </div>
-              <!-- <video id="video" width="300" height="250" autoplay ></video> -->
+              </div> -->
+              
 
             </div>
           </form>
@@ -202,7 +195,7 @@
 <div class="modal fade" id="scanPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-20">
-      <img src="scanImage">
+      <img *ngIf="scanImage" src="scanImage">
     </div>
   </div>
 </div>
