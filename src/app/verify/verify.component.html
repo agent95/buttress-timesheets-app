@@ -1,0 +1,38 @@
+<main class="main-scrollbar">
+
+  <div class="verify-screens container-fluid position-relative py-5">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-12 verify_img text-center">
+          <img class="w-60" src="assets/img/user-interface.svg" alt="">
+        </div>
+        <div class="col-12 text-center verify_content mt-5">
+          <h2 class="fs-18 text-theme2 fw-bold">What&apos;s your phone number?</h2>
+          <span class="fs-14 text-muted">We will feed you able to verify your number</span>
+          <form class="mt-5" action="" [formGroup]="inputForm">
+            <div class="form-group mb-4 position-relative" >
+              <!-- <input type="text" class="form-control shadow-none" pattern="[0-9]*" minlength="9" maxlength="11"
+                formControlName="number" id="number" name="number" placeholder="Phone number" required> -->
+              <input type="text"formControlName="number"  id="number" name="number" class="form-control shadow-none " ng2TelInput (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)"
+                (int1TelInputObject)="telInputObject($event)" (countryChange)="onCountryChange($event)"[ng2TelInputOptions]="{initialCountry: 'au'}">
+              <span class="text-danger fs-12 d-flex text-left"><strong>{{comment}}</strong></span>
+              <!-- <label class="input_icon" for=""><img class="img-fluid" src="assets/img/call.svg" alt=""></label> -->
+            </div>
+            <div class="form-group mb-4 pt-2">
+              <input (click)="addapi()" type="button" class="button_screens" value="Verify">
+
+            </div>
+            <div class="form-group mb-4 pt-2">
+              <input type="button" (click)="gotoSignIn()" class="button_screens" value="Use Email">
+            </div>
+
+            <div class="form-group pt-5">
+              <label class="text-muted mb-2 d-block fs-14" for="">No Account?</label>
+              <input (click)="gotoSignUp()" type="button" class="button_screens" value="Create Account">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

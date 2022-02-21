@@ -1,0 +1,13 @@
+agm-map {
+    height: 300px;
+}
+
+zxing-scanner {
+    margin-top: 15px; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px; 
+    width: 250px;
+    opacity: 1.0;
+}

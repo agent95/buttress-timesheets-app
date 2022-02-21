@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,eAAe,AAAA,CACb,OAAO,CAAE,IAAI,CACd,AAED,MAAM,EAAE,SAAS,EAAE,KAAK,EACtB,AAAA,eAAe,AAAA,CACb,OAAO,CAAE,KAAK,CACf",
+    "sources": [
+        "../../../scss/All_screens.scss"
+    ],
+    "names": [],
+    "file": "All_screens.min.css"
+}

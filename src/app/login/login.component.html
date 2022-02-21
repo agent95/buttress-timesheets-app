@@ -1,0 +1,59 @@
+<main class="main-scrollbar">
+
+  <div class="screens_header position-fixed bg-theme1 h-70px zi-9 d-flex align-items-center w-100">
+    <div class="container">
+      <div class="row align-items-center position-relative position-relative zi-2">
+        <div class="col-auto position-absolute start-0">
+          <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt=""></a>
+        </div>
+        <div class="col text-center">
+          <h2 class="text-white fw-600 fs-18 mb-0">Details</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="screens_scroll_part h-100 pt-5">
+    <div class="container">
+      <div class="row py-5 mt-4">
+        <div class="col-12 text-center">
+          <div class="">
+            <h2 class="fs-17 text-theme2 fw-bold">We could not find your number <br> in our records.</h2>
+            <span class="fs-14 text-muted">Please Sign Up</span>
+          </div>
+          <form class="mt-5" action="" [formGroup]="loginform">
+            <div class="form-group position-relative mb-4">
+              <input type="email" formControlName="email" class="form-control shadow-none" id="mail" name="mail"
+                placeholder="Email" #e>
+              <label class="input_icon" for=""><img class="img-fluid" src="assets/img/mail.svg" alt=""></label>
+            </div>
+            <div class="form-group position-relative mb-4">
+              <input type="password" formControlName="password" class="form-control shadow-none" id="password"
+                name="password" #p placeholder="password">
+              <label class="input_icon" for=""><img class="img-fluid" src="assets/img/password.svg" alt=""></label>
+            </div>
+            <div class="form-group mt-5 mb-4">
+              <input type="button" (click)="check(e.value,p.value)" class="button_screens" value="Sign Up">
+            </div>
+            <span>{{msg}}</span>
+            <div class="form-group text-center position-relative text-start my-3 pt-2">
+              <span class="fs-16 text-muted fw-600">OR</span>
+            </div>
+            <div class="form-group justify-content-center mx-0 row pt-2">
+              <div class="col-auto">
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Login with facebook"
+                  class="d-flex align-items-center h-50px w-50px rounded-pill shadow border border-2 bg-light p-1"
+                  style="cursor: pointer"><img class="img-fluid" src="assets/img/facebook.png" alt=""></a>
+              </div>
+              <div class="col-auto">
+                <a data-bs-toggle="tooltip" data-bs-placement="top" title="Login with google"
+                  class="d-flex align-items-center h-50px w-50px rounded-pill shadow border border-2 bg-light p-1"
+                  style="cursor: pointer"><img class="img-fluid" src="assets/img/google.svg" alt=""></a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

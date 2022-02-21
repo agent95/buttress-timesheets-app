@@ -1,0 +1,38 @@
+.main_items ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .main_items ul li {
+    width: 35px;
+    height: 35px;
+    position: relative;
+    border-radius: 50px;
+    margin-right: 10px;
+    background-color: #2626bc;
+    color: #fff;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .main_items ul li .short-circle {
+    position: absolute;
+    top: 0px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px; 
+    background-color: #ffffff;
+    color: #2626bc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    font-size: 13px;
+  }
+  .form-group {
+    display: grid;
+  }

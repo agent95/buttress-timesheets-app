@@ -1,0 +1,64 @@
+
+  <main class="main-scrollbar">
+
+    <div class="screens_header position-fixed bg-theme1 h-70px zi-9 d-flex align-items-center w-100">
+      <div class="container">
+        <div class="row align-items-center position-relative position-relative zi-2">
+          <div class="col-auto position-absolute start-0">
+            <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt="" (click)="rout()"></a>
+          </div>
+          <div class="col text-center">
+            <h2 class="text-white fw-600 fs-18 mb-0">Home Page</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screens_scroll_part py-5">
+      <div class="container pt-4">
+        <div class="row py-4">
+          <div class="col-12 text-center">
+            <form class="" action="">
+              <div class="form-group position-relative text-start mb-4">
+                <label class="fw-600 fs-16 d-flex mb-2" for="message">Whats new</label>
+                <textarea class="form-control shadow-none" name="message" id="message"></textarea>
+              </div>
+              <div class="form-group position-relative text-start mb-4">
+                <label class="fw-600 fs-16 d-flex mb-2" for="message">Updates</label>
+                <textarea class="form-control shadow-none" name="message" id="message"></textarea>
+              </div>
+              <div class="form-group position-relative text-start mb-4">
+                <label class="fw-600 fs-16 d-flex mb-2" for="message">Information</label>
+                <textarea class="form-control shadow-none" name="message" id="message"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screens_footer">
+      <div class="container">
+        <div class="row mx-0 align-items-center">
+          <div class="col text-center">
+            <a class="footer_mennus position-relative active_menu" (click)="index()"style="cursor: pointer"><img
+                src="assets/img/active_home.svg" alt=""></a>
+          </div>
+          <div class="col text-center">
+            <a class="footer_mennus position-relative"style="cursor: pointer" (click)="profile()"#p><img src="assets/img/user.svg" alt=""></a>
+          </div>
+          <div class="col text-center middle_menus">
+            <a class="footer_mennus position-relative"style="cursor: pointer" (click)="clock()"#c><img class="bg-white rounded-pill"
+                src="assets/img/watch.svg" alt=""></a>
+          </div>
+          <div class="col text-center">
+            <a class="footer_mennus position-relative" style="cursor: pointer"(click)="timesheet()"#t><img src="assets/img/timesheet.svg"
+                alt=""></a>
+          </div>
+          <div class="col text-center">
+            <a class="footer_mennus position-relative"style="cursor: pointer" (click)="blankpage()" #b><img src="assets/img/settings.svg"
+                alt=""></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>

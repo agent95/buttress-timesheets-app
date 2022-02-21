@@ -1,0 +1,61 @@
+<main class="main-scrollbar">
+
+  <div class="get-otp container-fluid position-relative py-5">
+    <div class="container py-3">
+      <div class="row">
+        <div class="col-12 get_otp_img text-center">
+          <img class="w-50" src="assets/img/verify.svg" alt="">
+        </div>
+        <div class="col-12 text-center verify_content mt-5">
+          <h2 class="fs-23 text-theme2 fw-bold">Verify your identity</h2>
+          <span class="fs-13 text-muted">We have just send a code to {{store}}</span>
+          <!-- <ng-otp-input  (onInputChange)="onOtpChange($event)"  [config]="{length:5}"></ng-otp-input> -->
+            <div class="digit-group form-group row mx-0">
+
+              <!-- <input class="col px-0 text-center mx-2 h-65px form-control shadow-none fs-22 fw-bold text-theme2"
+                type="text" formControlName="digit1" id="digit-1"name="digit-1" action="/digit-2"  maxlength="1" pattern="[0-9]"
+                autocomplete="off" autofocus="on" required>
+
+              <input class="col px-0 text-center mx-2 h-65px form-control shadow-none fs-22 fw-bold text-theme2"
+                type="text" formControlName="digit2" id="digit-2" name="digit-2" action="/digit-3" data-previous="digit-1"
+                maxlength="1" pattern="[0-9]" autocomplete="off" required>
+
+              <input class="col px-0 text-center mx-2 h-65px form-control shadow-none fs-22 fw-bold text-theme2"
+                type="text" formControlName="digit3" id="digit-3"name="digit-3" action="/digit-4" data-previous="digit-2"
+                maxlength="1" pattern="[0-9]" autocomplete="off" required>
+
+              <input class="col px-0 text-center mx-2 h-65px form-control shadow-none fs-22 fw-bold text-theme2"
+                type="text" formControlName="digit4" id="digit-4" data-previous="digit-3"
+                maxlength="1" pattern="[0-9]" autocomplete="off" required>
+            -->
+            <div class="card">
+              <form class="mt-5 pt-5" action="" [formGroup]="otpForm" >
+
+              <p class="a-o-i">Enter verification code</p>
+              <ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)"  *ngIf="showOtpComponent" [config]="config"></ng-otp-input>
+              <span *ngIf="otp" class="o-t-p">Entered otp :-{{otp}}</span>
+            </form>
+            <span class="text-danger fs-12 "><strong>{{comment}}</strong></span>
+
+            </div>
+              <div class="form-group my-4">
+                <span class="fs-14 text-muted">I didn&apos;t receive code.
+                  <a class="text-theme1" *ngIf="resend==false" (click)="resendOtp()" style="cursor: pointer">Resend
+                    Code</a>
+                  <span *ngIf="resend==true">
+                    {{data}}
+                  </span>
+                </span>
+              </div>
+
+              <div class="form-group mt-5 pt-5">
+                <input type="button"  (click)="sendValues()" class="button_screens"
+                  value="Confirm">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

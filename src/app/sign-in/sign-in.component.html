@@ -1,0 +1,56 @@
+<main class="main-scrollbar">
+
+  <div class="screens_scroll_part h-100 pt-5">
+    <div class="container">
+      <div class="row py-5 mt-4">
+        <div class="col-12 text-center">
+          <div class="">
+            <h2 class="fs-18 mb-1 text-theme2 fw-bold">Sign In</h2>
+            <span class="fs-14 text-muted">Please Sign In</span>
+          </div>
+          <form class="mt-4" action="" [formGroup]="SignInForm">
+            <div class="form-group position-relative mb-4">
+              <input type="email" class="form-control shadow-none" formControlName="mail" id="mail" name="mail"
+                placeholder="Email" email required>
+              <span class="text-danger fs-12 d-flex text-left"><strong>{{comment2}}</strong></span>
+
+
+              <label class="input_icon" for=""><img class="img-fluid" src="assets/img/mail.svg" alt=""></label>
+            </div>
+            <div class="form-group position-relative mb-4">
+              <input type="password" class="form-control shadow-none" formControlName="password" id="password"
+                name="password" placeholder="password" minlength="6" (click)="valid()" required>
+              <span class="text-danger fs-12 d-flex text-left"><strong>{{comment3}}</strong></span>
+
+
+              <label class="input_icon" for=""><img class="img-fluid" src="assets/img/password.svg" alt=""></label>
+            </div>
+            <div class="form-group mt-5 mb-4">
+              <input type="button" (click)="signIn()" class="button_screens" value="Sign In">
+            </div>
+            <div class="form-group text-center position-relative text-start my-3 pt-2">
+              <span class="fs-16 text-muted fw-600">Social Logins</span>
+            </div>
+            <div class="form-group justify-content-center mx-0 row pt-2">
+              <div class="col-auto">
+                <a data-bs-toggle="tooltip" data-bs-placement="top" (click)="onFBSignIn()" title="Login with facebook"
+                  class="d-flex align-items-center h-50px w-50px rounded-pill shadow border border-2 bg-light p-1"
+                  href="javascript:;"><img class="img-fluid" src="assets/img/facebook.png" alt=""></a>
+              </div>
+              <div class="col-auto">
+                <a data-bs-toggle="tooltip" data-bs-placement="top" (click)="onGoogleSignIn()" title="Login with google"
+                  class="d-flex align-items-center h-50px w-50px rounded-pill shadow border border-2 bg-light p-1"
+                  href="javascript:;"><img class="img-fluid" src="assets/img/google.svg" alt=""></a>
+              </div>
+            </div>
+            <div class="form-group pt-5 mt-4">
+              <label class="text-muted mb-3 d-block fs-14" for="">No Account?</label>
+              <input (click)='gotoSignUp()' type="button" class="button_screens" value="Create Account">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

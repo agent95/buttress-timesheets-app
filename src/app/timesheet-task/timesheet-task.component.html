@@ -1,0 +1,365 @@
+<main class="main-scrollbar">
+
+  <div class="screens_header position-fixed bg-theme1 h-70px zi-9 d-flex align-items-center w-100">
+    <div class="container">
+      <div class="row align-items-center position-relative position-relative zi-2">
+        <div class="col-auto position-absolute start-0">
+          <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt="" (click)="rout()"></a>
+        </div>
+        <div class="col text-center">
+          <h2 class="text-white fw-600 fs-18 mb-0">{{date | date:'EE,MMM d'}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="screens_scroll_part h-100 pt-5">
+    <div class="container pt-5">
+      <div class="row pt-2">
+        <div class="col-12">
+          <div class="row daily_summry">
+            <div  id="content" #content >
+              <div class="col-12 mb-4">
+
+                <div class="bg-light rounded-8 border border-1 text-center ">
+                  <div class="row mx-0">
+                    <div class="col-12 py-3 border-bottom">
+                      <span class="text-theme2 fs-16 fw-bold">Daily Summary</span>
+                    </div>
+                    <div class="col-12 py-3 border-bottom" *ngFor="let data of listData"
+                      (click)="sendtimesheet(data.start_time,data.end_time,data.total_working_hours,data.site_name,data._id,data.note,data.site_code)">
+                      <div class="row mb-2">
+                        <div class="col-4 text-start pe-1">
+                          <span class="text-theme2 fs-16 fw-500">Task</span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500">{{data.start_time | date: 'HH:mm'}}</span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500">{{data.end_time | date: 'HH:mm'}}</span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500">{{data.total_working_hours}}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-4 text-start pe-1" *ngIf="data.siteChecking == false">
+                          <span class="text-theme2 fs-16 fw-500">{{data.site_name}}</span>
+                        </div>
+                        <!-- <div class="col-4 text-start pe-1" *ngIf="data.siteChecking == true">
+                        <span class="text-theme2 fs-16 fw-500"><a class="text-theme fs-16 fw-500" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal3">ADD SITE</a>
+                        </span>
+                      </div> -->
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500"> </span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500"> </span>
+                        </div>
+                        <div class="col px-1" id="element"  data-html2canvas-ignore="true">
+                          <a class="text-theme fs-16 fw-500" data-bs-toggle="modal" data-bs-target="#exampleModal3"
+                            style="cursor: pointer">EDIT</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 text-center  my-4">
+                  <strong class="fs-20 fw-500 d-block mb-2">Today&apos;s Total</strong>
+                  <div class="bg-light rounded-20 py-4 border border-1 text-center">
+                    <strong class="fw-500 fs-42">{{TOTALHRS}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- <div id="content" #content *ngIf="pdfGenerateBoolean">
+              <div class="col-12 mb-4">
+
+                <div class="bg-light rounded-8 border border-1 text-center ">
+                  <div class="row mx-0">
+                    <div class="col-12 py-3 border-bottom">
+                      <span class="text-theme2 fs-16 fw-bold">Daily Summary</span>
+                    </div>
+                    <div class="col-12 py-3 border-bottom" *ngFor="let data of listData"
+                      (click)="sendtimesheet(data.start_time,data.end_time,data.total_working_hours,data.site_name,data._id,data.note)">
+                      <div class="row mb-2">
+                        <div class="col-4 text-start pe-1">
+                          <span class="text-theme2 fs-16 fw-500">Task</span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500">{{data.start_time | date: 'HH:mm'}}</span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500">{{data.end_time | date: 'HH:mm'}}</span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500">{{data.total_working_hours}}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-4 text-start pe-1" *ngIf="data.siteChecking == false">
+                          <span class="text-theme2 fs-16 fw-500">{{data.site_name}}</span>
+                        </div>
+                        
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500"> </span>
+                        </div>
+                        <div class="col px-1">
+                          <span class="text-theme2 fs-16 fw-500"> </span>
+                        </div>
+                        <div class="col px-1">
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 text-center  my-4">
+                  <strong class="fs-20 fw-500 d-block mb-2">Today&apos;s Total</strong>
+                  <div class="bg-light rounded-20 py-4 border border-1 text-center">
+                    <strong class="fw-500 fs-42">{{TOTALHRS}}</strong>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="col-12 mb-4">
+              <div class="bg-white rounded-20 border border-1 text-center">
+                <div class="row mx-0">
+                  <div class="col-12 py-4 border-bottom">
+                    <span class="text-theme2 fs-20 fw-500">Add Task</span>
+                  </div>
+                  <form class="py-4" [formGroup]="timesheetTaskForm">
+                    <div class="form-group position-relative text-start mb-3">
+
+                      <label for="cars">Choose a site</label><br>
+                      <select style="cursor: pointer" name="site_code"
+                        class="form-select bg-light rounded-8 shadow-none px-3 fs-14 h-33px" id="cars"
+                        formControlName="code" (change)="changeCity($event)">
+                        <option *ngFor="let item of valu;let i=index;" value="{{item.site_code}}">{{item.site_name}}
+                        </option>
+                      </select>
+
+                    </div>
+
+                    <div class="form-group position-relative text-start mb-3">
+                      <label class="fw-600 fs-16 mb-1" for="">Enter-code</label>
+                      <input type="text" id="code" name="code" formControlName="code"
+                        class="form-control shadow-none px-3 fs-14 h-33px" placeholder="enter code">
+
+                    </div>
+                    <div class="form-group position-relative text-start mb-3">
+                      <label class="fw-600 fs-16 mb-1" for="">Task Description</label>
+                      <textarea class="form-control shadow-none fs-14" formControlName="taskNote" name="message"
+                        id="message"></textarea>
+                    </div>
+                    <div class="col-12 mb-4">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <label class="fw-600 fs-16 mb-1" for="">Clock-In-Time</label>
+                          <input type="time" id="time" name="time" formControlName="startTime"
+                            class="form-control fs-14 shadow-none  h-60px px-3">
+                        </div>
+                        <div class="col">
+                          <label class="fw-600 fs-16 mb-1" for="">Clock-Out-Time</label>
+                          <input type="time" id="time" name="time" formControlName="endTime"
+                            class="form-control shadow-none px-3 fs-14 h-60px">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group position-relative mt-5 row justify-content-end pt-4">
+                      <div class="col-6">
+                        <a (click)="timesheet()" type="submit" class="button_screens rounded-8 fs-16"> + Add
+                        </a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <form class="" action="">
+            <div class="form-group position-relative text-center my-5 py-4">
+              <div class="row mx-0">
+                <div class="col-6">
+                  <a (click)="gotoTimesheet()" class="button_screens rounded-8 fs-16" style="cursor: pointer">Cancel</a>
+                </div>
+                <div class="col-6">
+                  <a class="button_screens rounded-pill fs-16" style="cursor: pointer" (click)="makepdf()">Share</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+<div class="modal" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-20">
+      <div class="modal-header text-center position-relative py-4">
+        <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="exampleModalLabel">Add Site</h5>
+        <button type="button" class="btn-close fs-14 text-theme2 fw-600 position-absolute start-10px"
+          data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-0">
+        <div class="row">
+          <div class="col-12">
+            <form [formGroup]="EDITSite">
+              <div class="row py-3 border-bottom">
+                <div class="col-6">
+
+                  <label for="cars">Choose a Site:</label>
+                </div>
+                <div class="col-6 text-end">
+
+                  <select class="form-select bg-light rounded-8 shadow-none px-3 fs-14 h-58px" name="site_code"
+                    id="cars" formControlName="STARTNAME" (change)="changeCode($event)">
+                    <option *ngFor="let item of valu;let i=index;" value="{{item.site_code}}">{{item.site_name}}
+                    </option>
+                  </select>
+                  <br>
+                </div>
+              </div>
+              <div class="row py-3 border-bottom">
+                <div class="col-6">
+                  <span class="fs-16 text-theme2 fw-600">Site Code:</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="fs-16 text-theme2 fw-600"> <input
+                      class="form-control shadow-none border-2 border h-60px px-3" formControlName="SITECODE"></span>
+                </div>
+              </div>
+              <div class="row py-3 border-bottom ">
+                <div class="col-3 ">
+                  <span class="fs-16 text-theme2 fw-600">Start:</span>
+                </div>
+                <div class="col-6 text-center">
+                  <span class="fs-16 text-theme2 fw-600"><input
+                      class="form-control shadow-none border-2 border h-60px px-3" formControlName="STARTTIME"></span>
+                </div>
+                <div class="col-3 text-end ">
+                  <span class="fs-16 text-theme2 fw-600"><input
+                      class="form-control shadow-none border-2 border h-60px px-3" formControlName="STARTTIME2"></span>
+                </div>
+
+              </div>
+              <div class="row py-3 border-bottom">
+                <div class="col-3">
+                  <span class="fs-16 text-theme2 fw-600">End:</span>
+                </div>
+                <div class="col-6 text-center">
+                  <span class="fs-16 text-theme2 fw-600"><input
+                      class="form-control shadow-none border-2 border h-60px px-3" formControlName="ENDTIME"></span>
+                </div>
+                <div class="col-3 text-end ">
+                  <span class="fs-16 text-theme2 fw-600"><input
+                      class="form-control shadow-none border-2 border h-60px px-3" formControlName="ENDTIME2"></span>
+                </div>
+              </div>
+              <div class="row py-4">
+                <div class="col-6">
+                  <span class="fs-16 text-theme2 fw-600">Total Hours</span>
+                </div>
+
+                <div class="col-6 text-end">
+                  <span class="fs-16 text-theme2 fw-600">{{thrs}}</span>
+                </div>
+              </div>
+              <div class="form-group position-relative text-start mb-4">
+                <label class="fw-600 fs-16 d-flex mb-2" for="message">Add Note</label>
+                <textarea class="form-control shadow-none h-90px" name="message" id="message"
+                  formControlName="NOTE"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer border-0 py-3">
+        <div class="row mx-0 w-100">
+          <div class="col-6">
+            <button type="button" class="button_screens rounded-8 fs-15" data-bs-dismiss="modal">Cancel</button>
+          </div>
+          <div class="col-6">
+            <button type="button" class="button_screens rounded-8 fs-15" (click)="updateDetails()"
+              data-bs-dismiss="modal">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-20">
+      <div class="modal-header text-center position-relative py-4">
+        <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="exampleModalLabel">Edit Task</h5>
+        <button type="button" class="btn-close fs-14 text-theme2 fw-600 position-absolute start-10px"
+          data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body py-0">
+        <div class="row">
+          <div class="col-12">
+            <form class="py-4" [formGroup]="timesheetTaskForm">
+
+              <div class="form-group position-relative text-start mb-3">
+                <label class="fw-600 fs-16 mb-1" for="">Trade Category</label>
+                <input type="text" id="address" name="address" formControlName="categories"
+                  class="form-control shadow-none px-3 fs-14 h-33px">
+              </div>
+              <div class="form-group position-relative text-start mb-3">
+                <label class="fw-600 fs-16 mb-1" for="">Task Description</label>
+                <textarea class="form-control shadow-none fs-14" formControlName="taskNote" name="message"
+                  id="message"></textarea>
+              </div>
+
+              <div class="row py-3 border-bottom">
+                <div class="col-6">
+                  <span class="fs-16 text-theme2 fw-600">Start:</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="fs-16 text-theme2 fw-600">{{stime | date: 'MMM d/HH:mm'}}</span>
+                </div>
+              </div>
+              <div class="row py-3 border-bottom">
+                <div class="col-6">
+                  <span class="fs-16 text-theme2 fw-600">End:</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="fs-16 text-theme2 fw-600">{{etime | date: 'MMM d/HH:mm'}}</span>
+                </div>
+              </div>
+              <div class="row py-4">
+                <div class="col-6">
+                  <span class="fs-16 text-theme2 fw-600">Total Hours</span>
+                </div>
+
+                <div class="col-6 text-end">
+                  <span class="fs-16 text-theme2 fw-600">{{thrs}}</span>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0 py-3">
+        <div class="row mx-0 w-100">
+          <div class="col-6">
+            <button type="button" class="button_screens rounded-8 fs-15" data-bs-dismiss="modal">Cancel</button>
+          </div>
+          <div class="col-6">
+            <button type="button" class="button_screens rounded-8 fs-15">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
