@@ -16,12 +16,14 @@
     <div class="map_box">
       <agm-map [latitude]='lat' [longitude]='long' [zoom]='zoom'>
 
-        <agm-marker *ngFor="let marker of valu" [latitude]="marker.lat" [longitude]="marker.long"
+        <agm-marker *ngIf="currentLocation" [latitude]="currentLocation.lat" [longitude]="currentLocation.lng"></agm-marker>
+
+        <!-- <agm-marker *ngFor="let marker of valu" [latitude]="marker.lat" [longitude]="marker.long"
           [markerClickable]="true" (markerClick)="fillAddress(marker)">
           <agm-info-window #infoWindow>
             {{ marker.site_address }}
           </agm-info-window>
-        </agm-marker>
+        </agm-marker> -->
 
       </agm-map>
     </div>
@@ -33,9 +35,10 @@
               <!-- <input type="text" id="address" name="address" formControlName="location1"
                 class="form-control shadow-none px-4" placeholder="Choose your location from the map" readonly> -->
                 <!-- <label>Site Address</label> -->
+                <a *ngIf="currentLocation" href="#" (click)="$event.preventDefault(); setCurrentAddress()">Use My Current Location</a>
             </div>
             <div class="form-group position-relative text-start">
-              <input  ngx-google-places-autocomplete  (onAddressChange)="handleAddressChange($event)" type="email" id="mail" name="mail" formControlName="address" class="form-control shadow-none px-4"
+              <input ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" type="email" id="mail" name="mail" formControlName="address" class="form-control shadow-none px-4"
                 placeholder="Enter Address" #A>
             </div>
 
@@ -89,7 +92,7 @@
         </div>
 
         <div class="col-12 my-5">
-          <a class="start_timer" (click)="check()"style="cursor: pointer">
+          <a class="start_timer" (click)="check()" style="cursor: pointer">
             <div><img src="assets/img/timer.svg" alt="">
               <strong class="d-flex align-items-center text-theme1 mt-2 fs-14" style="cursor: pointer">Start Timer</strong>
             </div>

@@ -60,12 +60,31 @@ export class ClockComponent implements OnInit {
   userLatitude: string = '';
   userLongitude: string = '';
 
+  currentLocation: any;
+  currentAddress: any;
+
+  clockDataForm = new FormGroup({
+    location1: new FormControl(''),
+    address: new FormControl('', [Validators.required]),
+    enterCode: new FormControl('', [Validators.required]),
+  });
+
+  get address() {
+    return this.clockDataForm.get('address');
+  }
+  get enterCode() {
+    return this.clockDataForm.get('enterCode');
+  }
+
   constructor(private router: Router, private service: AuthguardServiceService, private toastr: ToastrService, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     // this.videoRef = document.getElementById('video');
     // console.log('hwlo', this.videoRef);
     // // this.valu={}
+
+    /* HIDDEN FOR PHASE 1
+
     this.service.getData().subscribe((res: any) => {
       this.valu = res.data;
       for (let i = 0; i < this.valu.length; i++) {
@@ -90,7 +109,39 @@ export class ClockComponent implements OnInit {
     this.scanner?.camerasNotFound.subscribe(() => this.hasDevices = false);
     this.scanner?.scanComplete.subscribe((result: Result) => this.qrResult = result);
     this.scanner?.permissionResponse.subscribe((perm: boolean) => this.hasPermission = perm);
+  */
 
+    this.getMyLocation();
+  }
+
+  async getMyLocation(){
+    if (navigator.geolocation) {
+      await navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+
+          this.currentLocation = pos;
+          
+          let geocoder = new google.maps.Geocoder();
+          
+          geocoder
+          .geocode({location: pos},(response) => {
+            this.currentAddress = response[0].formatted_address;
+            })
+        }
+      );
+    } else {
+      console.log('not supported');
+    }
+  }
+
+  setCurrentAddress(){
+    this.clockDataForm.patchValue({
+      "address": this.currentAddress,
+    })
   }
 
   handleQrCodeResult(resultString: any) {
@@ -100,19 +151,8 @@ export class ClockComponent implements OnInit {
     this.qrResultString = resultString;
   }
 
-  clockDataForm = new FormGroup({
-    location1: new FormControl(''),
-    address: new FormControl('', [Validators.required]),
-    enterCode: new FormControl('', [Validators.required]),
-  })
+ 
 
-
-  get address() {
-    return this.clockDataForm.get('address');
-  }
-  get enterCode() {
-    return this.clockDataForm.get('enterCode');
-  }
   index() {
     this.router.navigate(['/index'])
   }
@@ -188,6 +228,9 @@ export class ClockComponent implements OnInit {
 
   check() {
 
+    this.sendData();
+    /* HIIDEN FOR PH 1
+
     if (this.address?.invalid && this.enterCode?.invalid) {
       this.sendData();
     }
@@ -223,6 +266,7 @@ export class ClockComponent implements OnInit {
         this.sendData();
       }
     }
+    */
   }
 
   nextSkip() {
@@ -278,15 +322,24 @@ export class ClockComponent implements OnInit {
   }
 
   sendData() {
+
+    const currentTIME = new Date().getTime();
+    const currentTIME3 = this.datepipe.transform(currentTIME, 'yyyy-MM-ddTHH:mm:ss')
+    const timezone = moment.tz.guess();
+
+    if (this.clockDataForm.value.address != "") {
+      this.consId = {
+        "address": this.clockDataForm.get('address')!.value,
+        "start_time": currentTIME3,
+        "time_zone":timezone,
+      }
+    }
+
+    /*
     if ((this.ar1 != undefined && this.ar1.site_induction) || (this.ar1 != undefined && this.ar1.safety_briefing)) {
       let myDialog: any = document.getElementById("exampleModal12");
       myDialog.close('exampleModal12');
     }
-    var currentTIME = new Date().getTime();
-
-    var currentTIME3 = this.datepipe.transform(currentTIME, 'yyyy-MM-ddTHH:mm:ss')
-    var timezone = moment.tz.guess();
-    console.log("Timezone",timezone);
 
     if (this.clockDataForm.value.address != "") {
       this.consId = {
@@ -322,6 +375,7 @@ export class ClockComponent implements OnInit {
 
       }
     }
+    */
 
     // if (this.address?.invalid && this.enterCode?.invalid) {
     //   this.comment = "required at least one of them 'address' or 'code'!"
