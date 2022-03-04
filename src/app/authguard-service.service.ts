@@ -55,12 +55,11 @@ export class AuthguardServiceService {
   //   );
   // }
   user = new BehaviorSubject(null);
-  // url="http://e406-27-58-125-50.ngrok.io/api/"
-  url="http://167.99.10.209:3030/api/"
-  // getProducts(): Observable<any> {
-  //   return this.http.get(this.url + 'getProfile')
-  //     ;
-  // }
+
+  //locolhost 
+  url = "http://127.0.0.1:3030/api/"
+  // url = "http://127.0.0.1:8080/api/";
+  //url="http://167.99.10.209:3030/api/";
 
   postLogin(nums: any): Observable<any> {
     let header = new HttpHeaders({ "Authorization": "Bearer " });
@@ -124,17 +123,39 @@ export class AuthguardServiceService {
     return this.http.post(this.url + 'workerStatus',valu,requestOptions).pipe(
       catchError(this.handleError));
   }
-  clockput(detail: any): Observable<any> {
+  
+  updateEntry(detail: any): Observable<any> {
     let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
     const requestOptions = { headers: header };
     return this.http.put(this.url + 'endworkingStatus', detail, requestOptions).pipe(
       catchError(this.handleError)
     );
   }
+
+  updateEntryDetails(detail: any): Observable<any> {
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.put(this.url + 'updateEntryDetails', detail, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getEntryDetails(entryID: any): Observable<any>{
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.get(this.url+'getEntryDetails?entry_id='+entryID,requestOptions).pipe(catchError(this.handleError))
+  }
+
   getData(): Observable<any>{
     let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
     const requestOptions = { headers: header };
     return this.http.get(this.url+'getAllsite?code=',requestOptions).pipe(catchError(this.handleError))
+  }
+
+  getTradeCategories(){
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.get(this.url+'getTradeCategories',requestOptions).pipe(catchError(this.handleError))
   }
   // putClockIn(valu: any): Observable<any> {
   //   let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
@@ -142,11 +163,13 @@ export class AuthguardServiceService {
   //   return this.http.put(this.url + 'endworkingStatus',valu,requestOptions).pipe(
   //     catchError(this.handleError));
   // }
+
   getTimeSheet(val:any){
     let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
     const requestOptions = { headers: header };
     return this.http.get(this.url+'timesheet?start_time='+val.start_time+'&end_time='+val.end_time,requestOptions).pipe(catchError(this.handleError))
   }
+
   postAddTask(val:any){
     let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
     const requestOptions = { headers: header };

@@ -6,6 +6,7 @@ import { ClockInComponent } from './clock-in/clock-in.component';
 import { ClockOutComponent } from './clock-out/clock-out.component';
 import { ClockTaskComponent } from './clock-task/clock-task.component';
 import { ClockComponent } from './clock/clock.component';
+import { EntryDetailsComponent } from './entry-details/entry-details.component';
 import { IndexComponent } from './index/index.component';
 import { OtpComponent } from './otp/otp.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
  {path:'profile',component:ProfileComponent,canActivate: [AuthenticatonGuard]},
  {path:'timesheet',component:TimesheetComponent, canActivate: [AuthenticatonGuard]},
  {path:'timesheet-task',component:TimesheetTaskComponent ,canActivate: [AuthenticatonGuard]},
+ {path:'entry-details',component:EntryDetailsComponent ,canActivate: [AuthenticatonGuard]},
  {path:'verify/:id',component:VerifyComponent},
  {path:'sign-in/:id',component:SignInComponent},
  {path:'sign-up/:id',component:SignUpComponent},

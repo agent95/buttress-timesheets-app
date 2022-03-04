@@ -69,6 +69,9 @@ export class ClockComponent implements OnInit {
     enterCode: new FormControl('', [Validators.required]),
   });
 
+ 
+  placesOptions: any;
+
   get address() {
     return this.clockDataForm.get('address');
   }
@@ -79,27 +82,28 @@ export class ClockComponent implements OnInit {
   constructor(private router: Router, private service: AuthguardServiceService, private toastr: ToastrService, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
+     this.placesOptions= {componentRestrictions:{country: 'AU'}};
     // this.videoRef = document.getElementById('video');
     // console.log('hwlo', this.videoRef);
     // // this.valu={}
 
-    /* HIDDEN FOR PHASE 1
-
+/* HIDDEN FOR PHASE 1
     this.service.getData().subscribe((res: any) => {
       this.valu = res.data;
       for (let i = 0; i < this.valu.length; i++) {
         this.valu[i].lat = this.valu[i].location[0];
         this.valu[i].long = this.valu[i].location[1];
       }
-      console.log("hello", this.valu)
+      console.log("Sites: ", this.valu)
 
       this.id = res.data[1] && res.data[1]._id;
       this.sitecode = res.data[1] && res.data[1].site_code;
-      console.log(this.id)
-      console.log(this.sitecode)
+      console.log("id: ",this.id, "sitecode: ", this.sitecode)
     })
+  */
     
    
+    /* HIDDEN FOR PHASE 1
     this.scanner?.camerasFound.subscribe((devices: MediaDeviceInfo[]) => {
       this.hasDevices = true;
       this.availableDevices = devices;
@@ -151,23 +155,22 @@ export class ClockComponent implements OnInit {
     this.qrResultString = resultString;
   }
 
- 
-
   index() {
     this.router.navigate(['/index'])
   }
+
   clock() {
-    if (localStorage.getItem("latestToken1") == null) {
+    if (localStorage.getItem("siteAddress") == null) {
       this.router.navigate(['/clock'])
 
     }
     else {
-      if (localStorage.getItem("latestToken1") == "") {
-        if (localStorage.getItem("time12") !== null) {
+      if (localStorage.getItem("siteAddress") == "") {
+        if (localStorage.getItem("siteTime") !== null) {
           this.router.navigate(['/clock-in'])
 
         }
-        else if (localStorage.getItem("time12") == null) {
+        else if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
 
         }
@@ -176,7 +179,7 @@ export class ClockComponent implements OnInit {
         }
       }
       else {
-        if (localStorage.getItem("time12") == null) {
+        if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
         }
         else {
@@ -225,12 +228,12 @@ export class ClockComponent implements OnInit {
     }
   }
 
-
-  check() {
-
-    this.sendData();
-    /* HIIDEN FOR PH 1
-
+  check(){
+    this.sendData()
+  }
+/*
+  zz_check() {
+  // if no address or sitecode
     if (this.address?.invalid && this.enterCode?.invalid) {
       this.sendData();
     }
@@ -266,8 +269,9 @@ export class ClockComponent implements OnInit {
         this.sendData();
       }
     }
-    */
+   
   }
+*/
 
   nextSkip() {
     for (let i = 0; i < this.valu.length; i++) {
@@ -321,21 +325,69 @@ export class ClockComponent implements OnInit {
 
   }
 
-  sendData() {
+  sendData(){
+    const getTime = new Date().getTime();
+    const currentTIME = this.datepipe.transform(getTime, 'yyyy-MM-ddTHH:mm:ss');
+    const timezone = moment.tz.guess();
+
+    const clockData = {
+      "address": this.clockDataForm.get('address')!.value,
+      "start_time": currentTIME,
+      "time_zone":timezone,
+    }
+
+    this.service.postClockIn(clockData).subscribe((res: any) => {
+      // this.valu2 = res;
+      // console.log('postClockinRes',res);
+
+      if(res.status){
+        // this.toastr.success("Starting the timer");
+        const sitename = res.data.site_Name;
+        const sitetime = res.data.start_time;
+
+        localStorage.setItem("siteAddress", clockData.address);
+        localStorage.setItem("siteTime", sitetime);
+        localStorage.setItem("siteName", sitename ?? clockData.address);
+       
+        this.router.navigate(['/clock-in'])
+      } else {
+        this.toastr.error(res.message);
+      }
+
+      /*
+      if (res.status == true) {
+        if (this.consId.code) {
+          localStorage.setItem("siteAddress", this.consId.code);
+        }
+        else {
+          localStorage.setItem("siteAddress", this.consId.address);
+        }
+
+        this.toastr.success("Your timer start for this site");
+        console.log("RESPONSE", this.valu2)
+        this.sitename = res.data.site_Name;
+        this.sitetime = res.data.start_time;
+        localStorage.setItem("siteTime", this.sitetime)
+        localStorage.setItem("time13", this.sitename)
+
+        console.log(this.sitename)
+        console.log(this.sitetime)
+        this.router.navigate(['/clock-in'])
+      } else {
+
+        this.toastr.error(res.message);
+      }*/
+    })
+    
+  }
+
+  /*
+  zz_sendData() {
 
     const currentTIME = new Date().getTime();
     const currentTIME3 = this.datepipe.transform(currentTIME, 'yyyy-MM-ddTHH:mm:ss')
     const timezone = moment.tz.guess();
 
-    if (this.clockDataForm.value.address != "") {
-      this.consId = {
-        "address": this.clockDataForm.get('address')!.value,
-        "start_time": currentTIME3,
-        "time_zone":timezone,
-      }
-    }
-
-    /*
     if ((this.ar1 != undefined && this.ar1.site_induction) || (this.ar1 != undefined && this.ar1.safety_briefing)) {
       let myDialog: any = document.getElementById("exampleModal12");
       myDialog.close('exampleModal12');
@@ -375,7 +427,7 @@ export class ClockComponent implements OnInit {
 
       }
     }
-    */
+    
 
     // if (this.address?.invalid && this.enterCode?.invalid) {
     //   this.comment = "required at least one of them 'address' or 'code'!"
@@ -385,17 +437,17 @@ export class ClockComponent implements OnInit {
       // localStorage.setItem("latestToken",this.consId);
       if (res.status == true) {
         if (this.consId.code) {
-          localStorage.setItem("latestToken1", this.consId.code);
+          localStorage.setItem("siteAddress", this.consId.code);
         }
         else {
-          localStorage.setItem("latestToken1", this.consId.address);
+          localStorage.setItem("siteAddress", this.consId.address);
         }
 
         this.toastr.success("Your timer start for this site");
         console.log("RESPONSE", this.valu2)
         this.sitename = res.data.site_Name;
         this.sitetime = res.data.start_time;
-        localStorage.setItem("time12", this.sitetime)
+        localStorage.setItem("siteTime", this.sitetime)
         localStorage.setItem("time13", this.sitename)
 
         console.log(this.sitename)
@@ -408,7 +460,7 @@ export class ClockComponent implements OnInit {
     })
   }
 
-
+*/
 
   handleAddressChange(address: any) {
     this.userAddress = address.formatted_address

@@ -24,17 +24,17 @@ export class ProfileComponent implements OnInit {
   index() { this.router.navigate(['/index']) }
   profile() { this.router.navigate(['/profile']) }
   clock() {
-    if (localStorage.getItem("latestToken1") == null) {
+    if (localStorage.getItem("siteAddress") == null) {
       this.router.navigate(['/clock'])
 
     }
     else {
-      if (localStorage.getItem("latestToken1") == "") {
-        if (localStorage.getItem("time12") !== null) {
+      if (localStorage.getItem("siteAddress") == "") {
+        if (localStorage.getItem("siteTime") !== null) {
           this.router.navigate(['/clock-in'])
 
         }
-        else if (localStorage.getItem("time12") == null) {
+        else if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
 
         }
@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
         }
       }
       else {
-        if (localStorage.getItem("time12") == null) {
+        if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
         }
         else {

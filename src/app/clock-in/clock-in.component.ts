@@ -13,8 +13,8 @@ import { AuthguardServiceService } from '../authguard-service.service';
 export class ClockInComponent implements OnInit {
   valu: any;
   val: any;
-  store: any;
-  store2: any;
+  siteName: any;
+  siteTime: any;
   second: number = 0;
   minute: string = '';
   hours: number = 0;
@@ -22,13 +22,15 @@ export class ClockInComponent implements OnInit {
   clockoutvar: any;
   clockin: any;
   totalhrs: any;
-  sitename: any;
   N:any;
   note: any;
   comment: any;
+  tradeCategories: any;
+  tradeCategory: any;
 
   constructor(private router: Router, private service: AuthguardServiceService, private activated: ActivatedRoute,private toastr:ToastrService) { }
   clockInForm = new FormGroup({
+    tradeCategory: new FormControl(0),
     notes: new FormControl('')
   })
   get notes() {
@@ -36,13 +38,11 @@ export class ClockInComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.store=localStorage.getItem("time13");
-
-    this.store2=localStorage.getItem("time12");
-    console.log(this.store2); 
+    this.siteName=localStorage.getItem("siteName");
+    this.siteTime=localStorage.getItem("siteTime");
 
     // difference between two dates in milliseconds 
-    const diff = new Date().getTime() - new Date(this.store2).getTime();
+    const diff = new Date().getTime() - new Date(this.siteTime).getTime();
  
 
     // new date object created from this difference 
@@ -56,30 +56,44 @@ export class ClockInComponent implements OnInit {
       return n < 10 ? '0' + n : '' + n;
     }
 
-
-
+    this.getTradeCategories();
   }
+
+  getTradeCategories(){
+    this.service.getTradeCategories().subscribe((res: any) => {
+      if (res.status == true) {
+        this.tradeCategories = res.data;
+      } else if (res.status == false) {
+        this.toastr.error(res.message);
+      }
+    })
+  }
+
   clockout() {
     // if (this.clockInForm.invalid) {
     //   this.comment = "Required note..!"
     // }
     // else {
      
-        this.clockin = new Date(this.store2).getTime();
+        this.clockin = new Date(this.siteTime).getTime();
         this.clockoutvar = new Date().getTime();
         this.totalhrs = this.minute;
-        this.sitename = this.store;
-        this.note = this.clockInForm.get("notes")!.value
-        console.log(this.clockin)
-        console.log(this.clockoutvar)
-        localStorage.setItem("id1",this.clockin);
-        localStorage.setItem("id2",this.clockoutvar);
-        localStorage.setItem("id3",this.totalhrs);
+        this.note = this.clockInForm.get("notes")!.value;
+        this.tradeCategory = this.clockInForm.get("tradeCategory")!.value;
+        localStorage.setItem("clockInTime",this.clockin);
+        localStorage.setItem("clockOutTime",this.clockoutvar);
+        localStorage.setItem("totalHrs",this.totalhrs);
+        localStorage.setItem("tradeCategory",this.tradeCategory);
+        localStorage.setItem("note",this.note);
+        // localStorage.setItem("id1",this.clockin);
+        // localStorage.setItem("id2",this.clockoutvar);
+        // localStorage.setItem("id3",this.totalhrs);
         // localStorage.setItem("id4",this.clockoutvar);
-        localStorage.setItem("id5",this.note);
+        // localStorage.setItem("id5",this.note);
      
-          this.router.navigate(['/clock-out'], { queryParams: { id1: btoa(this.clockin), id2: btoa(this.clockoutvar), id3: btoa(this.totalhrs), id4: btoa(this.sitename), id5: btoa(this.note) } })
-          localStorage.removeItem("time12");
+        // this.router.navigate(['/clock-out'], { queryParams: { start: btoa(this.clockin), stop: btoa(this.clockoutvar), total: btoa(this.totalhrs), site: btoa(this.siteName), trade: btoa(this.tradeCategory), note: btoa(this.note) } })
+        this.router.navigate(['/clock-out']);
+        //localStorage.removeItem("siteTime");
 
     // }
 
@@ -93,17 +107,17 @@ export class ClockInComponent implements OnInit {
 
   }
   clock() {
-    if (localStorage.getItem("latestToken1") == null) {
+    if (localStorage.getItem("siteAddress") == null) {
       this.router.navigate(['/clock'])
 
     }
     else {
-      if (localStorage.getItem("latestToken1") == "") {
-        if (localStorage.getItem("time12") !== null) {
+      if (localStorage.getItem("siteAddress") == "") {
+        if (localStorage.getItem("siteTime") !== null) {
           this.router.navigate(['/clock-in'])
 
         }
-        else if (localStorage.getItem("time12") == null) {
+        else if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
 
         }
@@ -112,7 +126,7 @@ export class ClockInComponent implements OnInit {
         }
       }
       else {
-        if (localStorage.getItem("time12") == null) {
+        if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
         }
         else {

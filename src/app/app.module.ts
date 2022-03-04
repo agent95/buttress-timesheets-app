@@ -35,6 +35,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { Ng2TelInputModule } from 'ng2-tel-input';
+import { EntryDetailsComponent } from './entry-details/entry-details.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
     SignInComponent,
     SignUpComponent,
     BlankpageComponent,
+    EntryDetailsComponent,
   ],
   imports: [
     BrowserModule,

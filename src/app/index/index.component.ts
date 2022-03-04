@@ -1,6 +1,7 @@
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import packageJson from '../../../package.json';
 
 @Component({
   selector: 'app-index',
@@ -20,6 +21,7 @@ export class IndexComponent implements OnInit {
   a2: any;
   a3: any = 0;
   ARR: any = [];
+  public version: string = packageJson.version;
   constructor(private router: Router) {
 
   }
@@ -43,17 +45,17 @@ export class IndexComponent implements OnInit {
 
     }
     else {
-      if (localStorage.getItem("latestToken1") == null) {
+      if (localStorage.getItem("siteAddress") == null) {
         this.router.navigate(['/clock'])
 
       }
       else {
-        if (localStorage.getItem("latestToken1") == "") {
-          if (localStorage.getItem("time12") !== null) {
+        if (localStorage.getItem("siteAddress") == "") {
+          if (localStorage.getItem("siteTime") !== null) {
             this.router.navigate(['/clock-in'])
 
           }
-          else if (localStorage.getItem("time12") == null) {
+          else if (localStorage.getItem("siteTime") == null) {
             this.router.navigate(['/clock-out'])
 
           }
@@ -62,7 +64,7 @@ export class IndexComponent implements OnInit {
           }
         }
         else {
-          if (localStorage.getItem("time12") == null) {
+          if (localStorage.getItem("siteTime") == null) {
             this.router.navigate(['/clock-out'])
           }
           else {

@@ -7,7 +7,7 @@
           <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt="" (click)="rout()"></a>
         </div>
         <div class="col text-center">
-          <h2 class="text-white fw-600 fs-18 mb-0">Site Address or Code</h2>
+          <h2 class="text-white fw-600 fs-18 mb-0">Site Address</h2>
         </div>
       </div>
     </div>
@@ -16,14 +16,16 @@
     <div class="map_box">
       <agm-map [latitude]='lat' [longitude]='long' [zoom]='zoom'>
 
+        <!-- // current location -->
         <agm-marker *ngIf="currentLocation" [latitude]="currentLocation.lat" [longitude]="currentLocation.lng"></agm-marker>
 
-        <!-- <agm-marker *ngFor="let marker of valu" [latitude]="marker.lat" [longitude]="marker.long"
+        <!-- // current sites -->
+        <agm-marker *ngFor="let marker of valu" [latitude]="marker.lat" [longitude]="marker.long"
           [markerClickable]="true" (markerClick)="fillAddress(marker)">
           <agm-info-window #infoWindow>
             {{ marker.site_address }}
           </agm-info-window>
-        </agm-marker> -->
+        </agm-marker>
 
       </agm-map>
     </div>
@@ -38,7 +40,7 @@
                 <a *ngIf="currentLocation" href="#" (click)="$event.preventDefault(); setCurrentAddress()">Use My Current Location</a>
             </div>
             <div class="form-group position-relative text-start">
-              <input ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" type="email" id="mail" name="mail" formControlName="address" class="form-control shadow-none px-4"
+              <input ngx-google-places-autocomplete [options]="placesOptions" (onAddressChange)="handleAddressChange($event)" type="email" id="mail" name="mail" formControlName="address" class="form-control shadow-none px-4"
                 placeholder="Enter Address" #A>
             </div>
 

@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./timesheet.component.css']
 })
 export class TimesheetComponent implements OnInit {
-  val: any;
+  // val: any;
   array: [] = [];
   i: any;
   startdate: any;
@@ -42,23 +42,25 @@ export class TimesheetComponent implements OnInit {
     initialDate: new FormControl(this.delay2),
     endDate: new FormControl(this.dat),
   })
+
   ngOnInit(): void {
     this.callApi();
   }
+
   index() { this.router.navigate(['/index']) }
   profile() { this.router.navigate(['/profile']) }
   clock() {
-    if (localStorage.getItem("latestToken1") == null) {
+    if (localStorage.getItem("siteAddress") == null) {
       this.router.navigate(['/clock'])
 
     }
     else {
-      if (localStorage.getItem("latestToken1") == "") {
-        if (localStorage.getItem("time12") !== null) {
+      if (localStorage.getItem("siteAddress") == "") {
+        if (localStorage.getItem("siteTime") !== null) {
           this.router.navigate(['/clock-in'])
 
         }
-        else if (localStorage.getItem("time12") == null) {
+        else if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
 
         }
@@ -67,7 +69,7 @@ export class TimesheetComponent implements OnInit {
         }
       }
       else {
-        if (localStorage.getItem("time12") == null) {
+        if (localStorage.getItem("siteTime") == null) {
           this.router.navigate(['/clock-out'])
         }
         else {
@@ -77,23 +79,31 @@ export class TimesheetComponent implements OnInit {
       }
     }
   }
-   timesheet() { this.router.navigate(['/timesheet']) }
+
+  timesheet() { this.router.navigate(['/timesheet']) }
+
   rout() {
     window.history.back();
   }
-  sendtimesheet(date:any,time:any) { 
-    this.router.navigate(['/timesheet-task'], { queryParams: { date: btoa(date), time: btoa(time)} }) 
+
+  // sendtimesheet(id:any, date:any,time:any) { 
+  //   this.router.navigate(['/entry-details'], { queryParams: {id:btoa(id), date: btoa(date), time: btoa(time)} }) 
+  // }
+
+  sendtimesheet(id:any) { 
+    this.router.navigate(['/entry-details'], { queryParams: {id:btoa(id)} }) 
   }
+
   callApi() {
-    this.val = {
+    const dateRange = {
       "start_time": this.timesheetForm.get("initialDate")!.value,
       "end_time": this.timesheetForm.get("endDate")!.value,
     }
-    this.service.getTimeSheet(this.val).subscribe((res: any) => {
+    this.service.getTimeSheet(dateRange).subscribe((res: any) => {
       console.log(res);
       this.userDetails = res.data;
-      this.userDetails=this.userDetails.reverse();
-      console.log(this.userDetails)
+      this.userDetails=this.userDetails?.reverse();
+      console.log('this.userDetails: ',this.userDetails);
       // for(let i = 0; i < this.userDetails.length; i++){
       // this.newarr=res.data[i].total_working_hours.split(":",2)
       // console.log("hwlo",this.newarr);

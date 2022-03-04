@@ -20,17 +20,14 @@
             <div class="col-12 mb-4">
               <form class="row align-items-center" [formGroup]="timesheetForm">
                 <div class="col">
+                  <label class="fw-600 fs-18" for="">From</label>
                   <div class="form-group">
                     <input type="date" autocomplete="off" class="form-control shadow-none border-2 border h-60px px-3 "
                     (focusout)="callApi()" formControlName="initialDate" placeholder="date">
                   </div>
                 </div>
-                <div class="col-auto px-0 text-center">
-                  <div class="form-group">
-                    <label class="fw-600 fs-18" for="">To</label>
-                  </div>
-                </div>
                 <div class="col">
+                  <label class="fw-600 fs-18" for="">To</label>
                   <div class="form-group">
                     <input type="date" autocomplete="off" class="form-control shadow-none border-2 border h-60px px-3"
                       (focusout)="callApi()" formControlName="endDate" placeholder="date">
@@ -38,30 +35,28 @@
                 </div>
               </form>
             </div>
-            <div class="col-12 mb-4 mt-2">
-              <div class="bg-light rounded-4 border border-1 text-center">
-
-                <a href="javascript:;" class="row mx-0">
-                  <div *ngFor="let item of userDetails;let i=index;" (click)="sendtimesheet(item.start_date,item.total_working_hours)">
-
-                    <div class="col-12 py-3 border-bottom">
-                      <div class="row align-items-center">
-                        <div class="col px-1">
-                          <span class="text-theme2 fs-16 fw-500"  >{{item.start_date |date : 'd EE'}}</span>
+            <div class="col-12 mt-4">
+              <div class="mb-3" *ngFor="let item of userDetails;let i=index;" (click)="sendtimesheet(item._id)">
+                <div class="col px-1 text-start">
+                  <span class="text-theme2 fs-16 fw-500"  >{{item.start_Date |date : 'd EE'}}</span>
+                </div>
+                <div class="bg-light rounded-4 border border-1 text-center">
+                <div class="row mx-0">
+                    <div class="col-12 p-2 border-bottom">
+                      <div *ngIf="item.site_address" class="text-start text-black p-1 mb-1 border-bottom">{{item.site_address}}</div>
+                      <div class="align-items-center">
+                        
+                        <div class="col px-1 text-start">
+                          <span class="text-theme2 fs-16 fw-500">Total : {{item.total_working_hours}}</span>
                         </div>
-                        <div class="col px-1">
-                          <span class="text-theme2 fs-16 fw-500">Total :</span>
-                        </div>
-                        <div class="col px-1">
-                          <span class="text-theme2 fs-16 fw-500">{{item.total_working_hours}}</span>
-                        </div>
-                        <div class="col px-1">
+                     
+                        <!-- <div class="col px-1">
                           <span class="text-theme2 fs-16 fw-500"><i class="imgs img-chevron-right"></i></span>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
           </div>

@@ -94,7 +94,7 @@ this.sitecode=site_code;
   }
   @ViewChild('content', { static: false }) el !: ElementRef;
   makepdf() {
-    var time123: any = new Date().getTime();
+    var siteTime3: any = new Date().getTime();
     var data1: any = document.getElementById('content');
     html2canvas(data1).then(canvas => {
       console.log(canvas)
@@ -114,14 +114,14 @@ this.sitecode=site_code;
          pdf.addImage(contentDataUrl, 'JPEG', 0, Position, imgWidth, imgHeight);
          heightLeft -= pageHeight;
       }
-      pdf.save(time123);
+      pdf.save(siteTime3);
     })
 
-    // var time123: any = new Date().getTime();
+    // var siteTime3: any = new Date().getTime();
     // let pdf = new jsPDF('p', 'pt', 'a2');
     // pdf.html(this.el.nativeElement, {
     //   callback: (pdf) => {
-    //     pdf.save(time123);
+    //     pdf.save(siteTime3);
     //   },
     //   margin: [30,25,25,25],
     //   // x: 50,

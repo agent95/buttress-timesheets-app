@@ -7,7 +7,7 @@
             <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt=""(click)="rout()"></a>
           </div> -->
           <div class="col text-center">
-            <h2 class="text-white fw-600 fs-18 mb-0">Clock In</h2>
+            <h2 class="text-white fw-600 fs-18 mb-0">Clock Started</h2>
           </div>
         </div>
       </div>
@@ -19,22 +19,26 @@
             <div class="row clock_in_box">
               <div class="col-12">
                 <div class="bg-light p-4 rounded-8 border border-2 text-start">
-                  <span class="d-block fs-18 mb-2 text-muted mt-2">{{store}}</span>
-                  <strong class="fs-43 text-theme2 fw-500">{{store2 | date:'mediumTime'}}</strong>
+                  <span *ngIf="siteName" class="d-block fs-18 mb-2 text-muted mt-2 pb-2 border-bottom">{{siteName}}</span>
+                  <div class="uppercase"> Start time:</div>
+                  <label class="fs-29 text-theme2">{{siteTime | date:'mediumTime'}}</label>
+                  <div class="uppercase"> Timer:</div>
+                  <strong class="fs-43 text-theme2 fw-500">{{minute}}</strong>
                 </div>
               </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-12 text-start my-4 py-2">
                 <span class="d-block fs-17 mb-0 fw-500 text-muted">Total hours today</span>
                 <label class="fs-36 text-theme2">{{minute}}</label>
               </div>
-            </div>
+            </div> -->
           </div>
-          <div class="col-12">
+
+          <!-- <div class="col-12 mt-4">
             <form class="" action="" [formGroup]="clockInForm">
               <div class="form-group position-relative text-start mb-4">
-                <label class="fw-600 fs-16 d-flex mb-2" for="message">Add Note</label>
+                <label class="fw-600 fs-16 d-flex mb-2" for="message">Task Description</label>
                 <textarea class="form-control shadow-none" name="message" id="message" formControlName="notes" required></textarea>
               </div>
               <span class="text-danger"><strong>{{comment}}</strong></span>
@@ -42,11 +46,80 @@
                 <button (click)="clockout()" class="button_screens rounded-10 fs-15 d-inline-flex w-auto px-4">Clock Out</button>
               </div>
             </form>
+          </div> -->
+
+          <!-- Add Task -->
+          <div class="col-12 my-4 ">
+            <div class="bg-white rounded-10 border border-1">
+              <div class="row mx-0">
+                <div class="col-12 py-4 border-bottom">
+                  <span class="text-theme2 fs-20 fw-500">Please Describe the Task</span>
+                </div>
+                <form class="py-4" [formGroup]="clockInForm">
+                  <!-- <div class="form-group position-relative text-start mb-3">
+
+                    <label for="cars">Choose a site</label><br>
+                    <select style="cursor: pointer" name="site_code"
+                      class="form-select bg-light rounded-8 shadow-none px-3 fs-14 h-33px" id="cars"
+                      formControlName="code" (change)="changeCity($event)">
+                      <option *ngFor="let item of valu;let i=index;" value="{{item.site_code}}">{{item.site_name}}
+                      </option>
+                    </select> 
+
+                  </div> -->
+
+                  <div class="form-group row position-relative text-start mb-3">
+                    <label class="fw-600 fs-16  mb-1"> Trade Category
+                    <select class="form-control shadow-none mt-2 px-3 col-12" formControlName="tradeCategory" name="tradeCagtegory"
+                      id="tradeCategory">
+                        <option value="i" value="0">Please Select</option>
+                        <option *ngFor="let trade of tradeCategories; let i=index" value="{{trade.tradeName}}">{{trade.tradeName}}</option>
+                    </select>
+                    </label>
+                  </div>
+
+                  <div class="form-group position-relative text-start mb-3">
+                    <label class="fw-600 fs-16 mb-1" for="">Description</label>
+                    <textarea class="form-control shadow-none fs-14" formControlName="notes" name="notes"
+                      id="notes"></textarea>
+                  </div>
+
+                  <!-- <div class="col-12 mb-4">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <label class="fw-600 fs-16 mb-1" for="">Clock-In-Time</label>
+                        <input type="time" id="time" name="time" formControlName="startTime"
+                          class="form-control fs-14 shadow-none  h-60px px-3">
+                      </div>
+                      <div class="col">
+                        <label class="fw-600 fs-16 mb-1" for="">Clock-Out-Time</label>
+                        <input type="time" id="time" name="time" formControlName="endTime"
+                          class="form-control shadow-none px-3 fs-14 h-60px">
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- <div class="form-group position-relative mt-5 row justify-content-end pt-4">
+                    <div class="col-6">
+                      <button type="submit" class="button_screens rounded-8 fs-16"> + Add
+                      </button>
+                    </div>
+                  </div> -->
+                  <div class="form-group position-relative mt-2 row justify-content-end pt-4">
+                    <div class="col-6 text-end">
+                        <button (click)="clockout()" class="button_screens rounded-10 fs-15 d-inline-flex w-auto px-4">Clock Out</button>
+                      </div>
+                    </div>
+                </form>
+              </div>
+            </div>
           </div>
+          <!-- // Add Task -->
 
         </div>
       </div>
     </div>
+
+    <!-- Tabs -->
     <div class="screens_footer">
       <div class="container">
         <div class="row mx-0 align-items-center">
