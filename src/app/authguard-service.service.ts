@@ -57,8 +57,7 @@ export class AuthguardServiceService {
   user = new BehaviorSubject(null);
 
   //locolhost 
-  url = "http://127.0.0.1:3030/api/"
-  // url = "http://127.0.0.1:8080/api/";
+  url = "http://127.0.0.1:3030/api/";
   //url="http://167.99.10.209:3030/api/";
 
   postLogin(nums: any): Observable<any> {

@@ -64,7 +64,7 @@ export class ClockComponent implements OnInit {
   currentAddress: any;
 
   clockDataForm = new FormGroup({
-    location1: new FormControl(''),
+    // location1: new FormControl(''),
     address: new FormControl('', [Validators.required]),
     enterCode: new FormControl('', [Validators.required]),
   });
@@ -344,10 +344,12 @@ export class ClockComponent implements OnInit {
         // this.toastr.success("Starting the timer");
         const sitename = res.data.site_Name;
         const sitetime = res.data.start_time;
+        const id = res.data._id;
 
         localStorage.setItem("siteAddress", clockData.address);
         localStorage.setItem("siteTime", sitetime);
         localStorage.setItem("siteName", sitename ?? clockData.address);
+        localStorage.setItem("entry_id", id);
        
         this.router.navigate(['/clock-in'])
       } else {
@@ -463,10 +465,16 @@ export class ClockComponent implements OnInit {
 */
 
   handleAddressChange(address: any) {
-    this.userAddress = address.formatted_address
-    this.userLatitude = address.geometry.location.lat()
-    this.userLongitude = address.geometry.location.lng()
+    this.userAddress = address.formatted_address;
+    this.userLatitude = address.geometry.location.lat();
+    this.userLongitude = address.geometry.location.lng();
+
+    this.clockDataForm.patchValue({
+      'address': address.formatted_address
+    })
   }
+
+
   // setupCamera() {
   //   navigator.mediaDevices.getUserMedia({
   //     video: { width: 300, height: 250 },

@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthguardServiceService } from '../authguard-service.service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-clock-in',
@@ -28,7 +30,7 @@ export class ClockInComponent implements OnInit {
   tradeCategories: any;
   tradeCategory: any;
 
-  constructor(private router: Router, private service: AuthguardServiceService, private activated: ActivatedRoute,private toastr:ToastrService) { }
+  constructor(private router: Router, private service: AuthguardServiceService, private activated: ActivatedRoute,private toastr:ToastrService,public datepipe: DatePipe) { }
   clockInForm = new FormGroup({
     tradeCategory: new FormControl(0),
     notes: new FormControl('')
@@ -38,6 +40,11 @@ export class ClockInComponent implements OnInit {
   }
   ngOnInit(): void {
     
+    if(!localStorage.getItem('siteTime')){
+      this.router.navigate(['/clock']);
+      return;
+    }
+
     this.siteName=localStorage.getItem("siteName");
     this.siteTime=localStorage.getItem("siteTime");
 
@@ -69,7 +76,7 @@ export class ClockInComponent implements OnInit {
     })
   }
 
-  clockout() {
+  zzclockout() {
     // if (this.clockInForm.invalid) {
     //   this.comment = "Required note..!"
     // }
@@ -80,6 +87,7 @@ export class ClockInComponent implements OnInit {
         this.totalhrs = this.minute;
         this.note = this.clockInForm.get("notes")!.value;
         this.tradeCategory = this.clockInForm.get("tradeCategory")!.value;
+
         localStorage.setItem("clockInTime",this.clockin);
         localStorage.setItem("clockOutTime",this.clockoutvar);
         localStorage.setItem("totalHrs",this.totalhrs);
@@ -98,6 +106,52 @@ export class ClockInComponent implements OnInit {
     // }
 
   }
+
+  clockout(){
+
+    const taskSummary = [];
+    // const todayDate = new Date();
+
+    // const clockin = new Date(this.siteTime).getTime();
+    const clockoutvar = new Date().getTime();
+    const totalhrs = this.minute;
+    const taskDescription = this.clockInForm.get("notes")!.value;
+    const tradeCategory = this.clockInForm.get("tradeCategory")!.value;
+    const entry_id = localStorage.getItem('entry_id')!;
+
+    taskSummary.push({
+      tradeCategory: tradeCategory,
+      taskDescription: taskDescription,
+      taskTime: totalhrs
+    })
+
+    const clockData = {
+      "end_time":this.datepipe.transform(clockoutvar, 'yyyy-MM-ddTHH:mm:ss'),
+      "total_working_hours":totalhrs,
+      "tasks": taskSummary,
+      "entryId": entry_id
+    }
+
+    this.service.updateEntryDetails(clockData).subscribe((res: any) => {
+      console.log('update initial details',res);
+      if(res.status){
+        this.router.navigate(['/entry-details'], { queryParams: {id:btoa(entry_id)} }) 
+      } else {
+        this.toastr.error(res.message);
+      }
+    })
+
+      localStorage.removeItem("siteAddress");
+      localStorage.removeItem("siteName");
+      localStorage.removeItem("siteTime");
+      localStorage.removeItem("clockInTime");
+      localStorage.removeItem("clockOutTime");
+      localStorage.removeItem("totalHrs");
+      localStorage.removeItem("note");
+      
+  }
+
+
   index() {
     this.router.navigate(['/index'])
 

@@ -3,9 +3,9 @@
     <div class="screens_header position-fixed bg-theme1 h-70px zi-9 d-flex align-items-center w-100">
       <div class="container">
         <div class="row align-items-center position-relative position-relative zi-2">
-          <div class="col-auto position-absolute start-0">
+          <!-- <div class="col-auto position-absolute start-0">
             <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt="" (click)="rout()"></a>
-          </div>
+          </div> -->
           <div class="col text-center">
             <h2 class="text-white fw-600 fs-18 mb-0">Entry Details</h2>
           </div>
@@ -34,10 +34,10 @@
                 </div>
               </div>
               <div class="col-12 mb-4">
-                <span>Total</span>
                 <div class="bg-light p-3 rounded-8 border border-2 text-center">
-                  <div>
-                    <div class="text-end">
+                  <div class="row">
+                    <div class="fw-500 fs-24 d-block col text-start">Total</div>
+                    <div class="col text-end">
                       <span class="fw-500 fs-24 d-block">{{entryDetails?.total_working_hours}}</span>
                     </div>
                   </div>
@@ -45,11 +45,11 @@
               </div>
             </div>
           </div>
-          <div class="col-12">
-            <div>
+          <div class="col-12" >
+            <div *ngIf="entryDetails?.tasks.length">
               Task Summary
             </div>
-            <div class="rounded-10 border border-2 bg-light p-3 py-1  mb-4">
+            <div *ngIf="entryDetails?.tasks.length" class="rounded-10 border border-2 bg-light p-3 py-1  mb-4">
               <div *ngFor="let task of entryDetails?.tasks; let isLast = last" class="py-2" [class.border-bottom]="!isLast">
                 <div>
                   <div class="row">
@@ -123,9 +123,12 @@
               </div>
             </div>
 
-            <div class="my-5">
+            <div class="my-5 row gap-3 justify-content-between">
+              <button (click)="timesheet()"
+               class="col btn rounded-8 fs-16"><img src="assets/img/timesheet.svg"
+               alt=""> Timesheets</button>
               <button (click)="share()"
-               class="button_screens rounded-8 fs-16">Share</button>
+               class="col button_screens rounded-8 fs-16">Share</button>
             </div>
             <!-- // Add Task -->
             <!-- <form class="" action="" [formGroup]="clockOutForm">
@@ -173,6 +176,9 @@
   
   </main>
   
+
+
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
