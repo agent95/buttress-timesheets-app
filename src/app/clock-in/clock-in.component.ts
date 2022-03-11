@@ -35,9 +35,9 @@ export class ClockInComponent implements OnInit {
     tradeCategory: new FormControl(0),
     notes: new FormControl('')
   })
-  get notes() {
-    return this.clockInForm.get('notes');
-  }
+  // get notes() {
+  //   return this.clockInForm.get('notes');
+  // }
   ngOnInit(): void {
     
     if(!localStorage.getItem('siteTime')){
@@ -109,7 +109,7 @@ export class ClockInComponent implements OnInit {
 
   clockout(){
 
-    const taskSummary = [];
+    // const taskSummary = [];
     // const todayDate = new Date();
 
     // const clockin = new Date(this.siteTime).getTime();
@@ -119,11 +119,11 @@ export class ClockInComponent implements OnInit {
     const tradeCategory = this.clockInForm.get("tradeCategory")!.value;
     const entry_id = localStorage.getItem('entry_id')!;
 
-    taskSummary.push({
+    const taskSummary = {
       tradeCategory: tradeCategory,
       taskDescription: taskDescription,
       taskTime: totalhrs
-    })
+    } 
 
     const clockData = {
       "end_time":this.datepipe.transform(clockoutvar, 'yyyy-MM-ddTHH:mm:ss'),
