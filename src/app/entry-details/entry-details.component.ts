@@ -10,6 +10,7 @@ import { jsPDF } from 'jspdf'
 import { Content } from '@angular/compiler/src/render3/r3_ast';
 import html2canvas from 'html2canvas';
 import { ClockOutComponent } from '../clock-out/clock-out.component';
+import { IconEditComponent } from '../icon-edit/icon-edit.component';
 
 
 @Component({
@@ -52,6 +53,7 @@ export class EntryDetailsComponent implements OnInit {
   entryDetails: any;
   tradeCategories: any;
   N: any;
+  totalTaskTime: any;
 
   constructor(private router: Router, private service: AuthguardServiceService, private activated:ActivatedRoute, private toastr:ToastrService, private datepipe: DatePipe) {
   
@@ -97,12 +99,55 @@ export class EntryDetailsComponent implements OnInit {
     this.service.getEntryDetails(this.entryId).subscribe((res: any) => {
       if (res.status == true) {
         this.entryDetails = res.data;
+        this.getSumOfTaskTime(this.entryDetails.tasks)
       } else if (res.status == false) {
         this.toastr.error(res.message);
       }
     })
   }
 
+  getSumOfTaskTime(tasks: any){
+     if (this.entryDetails.tasks.length === 1){
+      this.totalTaskTime = this.entryDetails.total_working_hours;
+     } else {
+       let reducerFn = (acc:any, currentVal:any) => {
+         const currTime = this.timestrToSec(currentVal.taskTime);
+         const total = acc + currTime;
+         return total;
+        };
+       let time = tasks.reduce(reducerFn,0);
+       this.totalTaskTime =  this.formatTime(time);
+     }; 
+  }
+  
+  timestrToSec = (timestr:any) => {
+    let parts = timestr.split(":");
+    return (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60) + (parseInt(parts[2]));
+  }
+  
+  pad = (num:any) => {
+    if(num < 10) {
+      return "0" + num;
+    } else {
+      return "" + num;
+    }
+  }
+  
+  formatTime = (seconds:any) => {
+    return [this.pad(Math.floor(seconds/3600)),
+            this.pad(Math.floor(seconds/60)%60),
+            this.pad(seconds%60),
+            ].join(":");
+  }
+
+  // formatTime = (seconds:any) => {
+  //   console.log('seconds', seconds)
+  //   return [Math.floor(seconds/3600),
+  //           Math.floor(seconds/60)%60,
+  //           seconds%60,
+  //           ].join(":");
+  // }
+  
   addtask(){
     const task = {
       tradeCategory: this.addTaskForm.get("tradeCategory")!.value,
@@ -112,7 +157,7 @@ export class EntryDetailsComponent implements OnInit {
 
     const data = {
       entryId: this.entryId,
-      task: task
+      tasks: task
     }
     // UPDATE THE ENTRY TO ADD NEW TASK
     this.service.updateEntryDetails(data).subscribe((res: any) => {

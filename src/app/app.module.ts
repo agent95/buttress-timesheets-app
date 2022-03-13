@@ -36,6 +36,9 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { EntryDetailsComponent } from './entry-details/entry-details.component';
+import { IconEditComponent } from './icon-edit/icon-edit.component';
+import { IconPlusComponent } from './icon-plus/icon-plus.component';
+import { IconXComponent } from './icon-x/icon-x.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { EntryDetailsComponent } from './entry-details/entry-details.component';
     SignUpComponent,
     BlankpageComponent,
     EntryDetailsComponent,
+    IconEditComponent,
+    IconPlusComponent,
+    IconXComponent,
   ],
   imports: [
     BrowserModule,

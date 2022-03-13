@@ -16,33 +16,28 @@
       <div class="container pt-5">
         <div class="row pt-2">
           <div class="col-12">
-            <div class="row clock_in_box">
-              <div class="col-6 mb-4">
+            <div class="row clock_in_box position-relative">
+              <div class="col-9">
                 <strong class="text-theme2 fs-18">{{entryDetails?.start_time | date:'EE MMM d'}}</strong>
               </div>
-              <div class="pb-2"><label *ngIf="entryDetails?.site_address"  class="" for=""><img src="assets/img/pin.svg" alt=""> {{entryDetails?.site_address}}</label></div>
+              
+              <span class="col-3 btn-link text-end" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit> Edit</span>
+              
+              <div class="pb-2"><label *ngIf="entryDetails?.site_address"><img src="assets/img/pin.svg" alt=""> <span>{{entryDetails?.site_address}}</span></label></div>
               <div class="col-6 my-4">
                 <span>Start</span>
                 <div class="bg-light p-3 rounded-8 border border-2 text-center">
-                  <span class="fw-500 fs-24 d-block"> {{  entryDetails?.start_time | date:'mediumTime'}}</span>
+                  <div class="fw-500 fs-24 d-block"> {{  entryDetails?.start_time | date:'mediumTime'}} </div>
                 </div>
               </div>
               <div class="col-6 my-4">
                 <span>Stop</span>
                 <div class="bg-light p-3 rounded-8 border border-2 text-center">
-                  <span class="fw-500 fs-24 d-block">{{ entryDetails?.end_time | date:'mediumTime'}}</span>
+                  <div class="fw-500 fs-24 d-block">{{ entryDetails?.end_time | date:'mediumTime'}} </div>
+                  
                 </div>
               </div>
-              <div class="col-12 mb-4">
-                <div class="bg-light p-3 rounded-8 border border-2 text-center">
-                  <div class="row">
-                    <div class="fw-500 fs-24 d-block col text-start">Total</div>
-                    <div class="col text-end">
-                      <span class="fw-500 fs-24 d-block">{{entryDetails?.total_working_hours}}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             
             </div>
           </div>
           <div class="col-12" >
@@ -53,30 +48,47 @@
               <div *ngFor="let task of entryDetails?.tasks; let isLast = last" class="py-2" [class.border-bottom]="!isLast">
                 <div>
                   <div class="row">
-                    <div class="col-10">{{task.tradeCategory}}</div>
-                    <div class="col-2 text-end"><button class=" col btn btn-link p-0 text-end">Edit</button></div>
+                      <div class="col-9">{{task.tradeCategory}} 
+
+                      </div>
+                    <div class="col-3 text-end">
+                      <button title="Remove" type="button" class="btn-close"></button>
+                    </div>
+                    
                   </div>
                
                   <div class="row">
-                    <div *ngIf="task.taskDescription" class="col-9">{{task.taskDescription}}</div>
+                    <div class="col-9">{{task.taskDescription}}</div>
                     <div class="col-3 text-end fs-20 fw-semi-bold ">
-                      <div>{{task.taskTime}}</div>
+                      <div>{{task.taskTime}}
+                      <span class="btn-link" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit></span> 
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-  
-              
+            </div>
+
+             <!-- Total working hrs -->
+             <div class="col-12 mb-4">
+              <div class="bg-light p-3 rounded-8 border border-2 text-center">
+                <div class="row">
+                  <div class="fw-500 fs-24 d-block col text-start">Total</div>
+                  <div class="col text-end">
+                    <span class="fw-500 fs-24 d-block">{{totalTaskTime}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
   
             <!-- Unallocated Time -->
   
-            <div>
+            <!-- <div>
               Unallocated Time 
               <div class="bg-light p-3 rounded-8 border border-2">
                 <span class="fw-500 fs-24 d-block text-danger text-end">00:20</span>
               </div>
-            </div>
+            </div> -->
   
   
             <!-- Add Task -->
@@ -179,27 +191,26 @@
 
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- EDIT MODAL  -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content rounded-20">
         <div class="modal-header text-center position-relative py-4">
-          <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="exampleModalLabel">Edit Site</h5>
+          <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="editModalLabel">Edit Details</h5>
           <button type="button" class="btn-close fs-14 text-theme2 fw-600 position-absolute start-10px"
             data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body py-0">
           <div class="row">
             <div class="col-12">
-              <div class="row py-3 border-bottom">
+              <div class="text-center"> ...work in progress </div>
+              <!-- <div class="row py-3 border-bottom">
                 <div class="col-6">
-                  <span class="fs-16 text-theme2 fw-600">Site:</span>
+                  <span class="fs-16 text-theme2 fw-600">Date:</span>
+                  <div class="fs-16 text-theme2 fw-600 bg-light p-3 rounded-8 border border-2" contenteditable="true">{{entryDetails?.start_time | date:'EE MMM d'}}</div>
                 </div>
-                <div class="col-6 text-end">
-                  <span class="fs-16 text-theme2 fw-600">{{entryDetails?.site_address}}</span>
-                </div>
-              </div>
-              <div class="row py-3 border-bottom">
+              </div> -->
+              <!-- <div class="row py-3 border-bottom">
                 <div class="col-3">
                   <span class="fs-16 text-theme2 fw-600">Start:</span>
                 </div>
@@ -209,8 +220,8 @@
                 <div class="col-3 text-end">
                   <span class="fs-16 text-theme2 fw-600">{{start_time | date: 'h:mm'}}</span>
                 </div>
-              </div>
-              <div class="row py-3 border-bottom">
+              </div> -->
+              <!-- <div class="row py-3 border-bottom">
                 <div class="col-3">
                   <span class="fs-16 text-theme2 fw-600">End: </span>
                 </div>
@@ -220,26 +231,19 @@
                 <div class="col-3 text-end">
                   <span class="fs-16 text-theme2 fw-600">{{stop_time | date: 'h:mm'}}</span>
                 </div>
-              </div>
-              <div class="row py-4">
+              </div> -->
+              <!-- <div class="row py-4">
                 <div class="col-6">
                   <span class="fs-16 text-theme2 fw-600">Total Hours</span>
                 </div>
                 <div class="col-6 text-end">
                   <span class="fs-16 text-theme2 fw-600">{{total_hrs}}</span>
                 </div>
-              </div>
-              <form class="row" action="" [formGroup]="noteForm">
-                <div class="form-group position-relative text-start mb-4">
-                  <label class="fw-600 fs-16 d-flex mb-2" for="message">Add Note</label>
-                  <textarea class="form-control shadow-none h-90px" name="message" id="message"
-                    formControlName="message"></textarea>
-                </div>
-              </form>
-            </div>
+              </div> -->
+            </div> 
           </div>
         </div>
-        <div class="modal-footer border-0 py-3">
+        <!-- <div class="modal-footer border-0 py-3">
           <div class="row mx-0 w-100">
             <div class="col-6">
               <button type="button" class="button_screens rounded-8 fs-15" data-bs-dismiss="modal">Cancel</button>
@@ -248,7 +252,9 @@
               <button type="button" (click)="saveNote()"data-bs-dismiss="modal" class="button_screens rounded-8 fs-15">Save</button>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
+
+  
