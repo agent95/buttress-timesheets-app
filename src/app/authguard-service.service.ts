@@ -139,6 +139,15 @@ export class AuthguardServiceService {
     );
   }
 
+  updateEntryTime(detail: any): Observable<any> {
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.put(this.url + 'updateEntryTime', detail, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+
   updateEntryDate(detail: any): Observable<any> {
     let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
     const requestOptions = { headers: header };

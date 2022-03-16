@@ -110,6 +110,10 @@ export class EntryDetailsComponent implements OnInit {
         };
        let time = tasks.reduce(reducerFn,0);
        this.totalTaskTime =  this.formatTime(time);
+
+       if(this.entryDetails.total_working_hours !== this.totalTaskTime){
+         this.updateTotalhrs();
+       }
      }; 
   }
   
@@ -133,12 +137,24 @@ export class EntryDetailsComponent implements OnInit {
             ].join(":");
   }
 
-  handleAddressChange(address: any) {
-    // const userAddress = address.formatted_address;
-    // const userLatitude = address.geometry.location.lat();
-    // const userLongitude = address.geometry.location.lng();
+  updateTotalhrs(){
+    console.log('Need to update the total total_working_hrs',this.entryDetails.total_working_hours, this.totalTaskTime);
+    const data = {
+      entryId : this.entryId,
+      totalTaskTime: this.totalTaskTime
+    }
 
-    // console.log(address.formatted_address)
+    this.service.updateEntryTime(data).subscribe((res: any) => {
+      if(res.status){
+        this.toastr.success('Total Time Updated');
+      } else {
+        this.toastr.error(res.message);
+      }
+    })
+
+  }
+
+  handleAddressChange(address: any) {
     const data = {
       entryId : this.entryId,
       siteAddress: address.formatted_address
