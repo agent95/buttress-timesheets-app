@@ -53,7 +53,7 @@ export class EntryDetailsComponent implements OnInit {
   });
 
   addTaskForm = new FormGroup({
-    tradeCategory: new FormControl('0'),
+    tradeCategory: new FormControl('No Trade Category'),
     taskDescription: new FormControl(''),
     taskTime: new FormControl('0:00:00'),
   });  
@@ -190,7 +190,10 @@ export class EntryDetailsComponent implements OnInit {
       tradeCategory: this.addTaskForm.get("tradeCategory")!.value,
       taskDescription: this.addTaskForm.get("taskDescription")!.value,
       taskTime: this.addTaskForm.get("taskTime")!.value,
+      timestamp: new Date().getTime()
     }
+
+    // task.tradeCategory = (task.tradeCategory === 0)? 'No Trade Category' : task.tradeCategory; 
 
     const data = {
       entryId: this.entryId,
@@ -203,7 +206,7 @@ export class EntryDetailsComponent implements OnInit {
         this.getEntryDetails();
         this.addTaskForm.reset();
         this.addTaskForm.patchValue({
-          tradeCategory: 0,
+          tradeCategory: 'No Trade Category',
           taskTime: '0:00:00'
         })
         this.toastr.success('Updated');

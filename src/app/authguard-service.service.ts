@@ -56,9 +56,10 @@ export class AuthguardServiceService {
   // }
   user = new BehaviorSubject(null);
 
-  //locolhost 
-  // url = "http://127.0.0.1:3030/api/";
-  url="http://167.99.10.209:3030/api/";
+ url = (location.hostname === "localhost" || location.hostname === "127.0.0.1")? "http://127.0.0.1:3030/api/" : "http://167.99.10.209:3030/api/";
+
+  // url =  "http://127.0.0.1:3030/api/";
+  // url="http://167.99.10.209:3030/api/";
 
   postLogin(nums: any): Observable<any> {
     let header = new HttpHeaders({ "Authorization": "Bearer " });

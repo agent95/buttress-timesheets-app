@@ -49,14 +49,14 @@
             </div>
           </div>
           <div class="col-12" >
-            <div *ngIf="entryDetails?.tasks.length">
+            <div>
               Task Summary
             </div>
             <div *ngIf="entryDetails?.tasks.length" class="rounded-10 border border-2 bg-light p-3 py-1">
               <div *ngFor="let task of entryDetails?.tasks; let i = index; let isFirst = first; let isLast = last" class="py-2" [class.border-bottom]="!isLast">
                 <div>
                   <div class="row">
-                      <div class="col-9">{{task.tradeCategory}}  </div>
+                      <div class="col-9">{{task?.tradeCategory}}  </div>
                     <div *ngIf="!isFirst" class="col-3 text-end">
                       <!-- <span class="btn-link mx-2" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit></span>  -->
                       <span class="btn-link" role="button" title="Remove" (click)="removeTask(i)"><app-icon-minus></app-icon-minus></span>
@@ -66,9 +66,9 @@
                   </div>
                
                   <div class="row">
-                    <div class="col-9">{{task.taskDescription}}</div>
+                    <div class="col-9">{{task?.taskDescription}}</div>
                     <div class="col-3 text-end fs-20 fw-semi-bold ">
-                      <div>{{task.taskTime}}
+                      <div>{{task?.taskTime}}
                       </div>
                     </div>
                   </div>
@@ -77,9 +77,8 @@
             </div>
 
              <!-- Add Task -->
-             <div class="form-group position-relative row justify-content-end my-2">
+             <div class="form-group position-relative row my-2" [ngClass]="{'justify-content-end':entryDetails?.tasks.length}" >
               <div class="col-auto">
-                
                 <button class="btn btn-md d-inline-flex w-auto" data-bs-toggle="modal" data-bs-target="#taskModal">
                   <span class="btn-link" role="button" title="Add Task"><app-icon-plus></app-icon-plus> ADD TASK</span> 
                 </button>
@@ -194,7 +193,7 @@
                       <label class="fw-600 fs-16  mb-1"> Trade Category
                       <select class="form-control shadow-none mt-2 px-3 col-12" formControlName="tradeCategory" name="tradeCagtegory"
                         id="tradeCategory" required>
-                          <option value="i" value="0">Please Select</option>
+                          <option value="i" value="No Trade Category">Please Select</option>
                           <option *ngFor="let trade of tradeCategories; let i=index" value="{{trade.tradeName}}">{{trade.tradeName}}</option>
                       </select>
                       </label>

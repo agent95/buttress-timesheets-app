@@ -32,7 +32,7 @@ export class ClockInComponent implements OnInit {
 
   constructor(private router: Router, private service: AuthguardServiceService, private activated: ActivatedRoute,private toastr:ToastrService,public datepipe: DatePipe) { }
   clockInForm = new FormGroup({
-    tradeCategory: new FormControl(0),
+    tradeCategory: new FormControl("No Trade Category"),
     notes: new FormControl('')
   })
   // get notes() {
@@ -116,14 +116,17 @@ export class ClockInComponent implements OnInit {
     const clockoutvar = new Date().getTime();
     const totalhrs = this.minute;
     const taskDescription = this.clockInForm.get("notes")!.value;
-    const tradeCategory = this.clockInForm.get("tradeCategory")!.value;
+    let tradeCategory = this.clockInForm.get("tradeCategory")!.value;
     const entry_id = localStorage.getItem('entry_id')!;
+    
 
     const taskSummary = {
       tradeCategory: tradeCategory,
       taskDescription: taskDescription,
-      taskTime: totalhrs
+      taskTime: totalhrs,
+      timestamp: new Date().getTime()
     } 
+
 
     const clockData = {
       "end_time":this.datepipe.transform(clockoutvar, 'yyyy-MM-ddTHH:mm:ss'),

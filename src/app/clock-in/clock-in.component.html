@@ -72,7 +72,7 @@
                     <label class="fw-600 fs-16  mb-1"> Trade Category
                     <select class="form-control shadow-none mt-2 px-3 col-12" formControlName="tradeCategory" name="tradeCagtegory"
                       id="tradeCategory">
-                        <option value="i" value="0">Please Select</option>
+                        <option value="i" value="No Trade Category">Please Select</option>
                         <option *ngFor="let trade of tradeCategories; let i=index" value="{{trade.tradeName}}">{{trade.tradeName}}</option>
                     </select>
                     </label>
