@@ -20,26 +20,7 @@ import { IconEditComponent } from '../icon-edit/icon-edit.component';
 })
 export class EntryDetailsComponent implements OnInit {
   
-  // val: any;
-  // valu: any;
-  // prm: any;
-  // date: any;
-  // time: any;
-  // todaydate: any;
-  // listData: any;
-  // newarr: any = [];
-  // siteChecking: boolean = true;
-  // stime: any;
-  // etime: any;
-  // thrs: any;
-  // sname: any;
-  // mentos: any;
-  // sendingStime: any;
-  // sendingEtime: any;
-  // s_id: any;
-  // TOTALHRS: any;
-  // Note: any;
-  // sitecode:any;
+  
 
   // NEW VARS
 
@@ -54,6 +35,8 @@ export class EntryDetailsComponent implements OnInit {
   tradeCategories: any;
   N: any;
   totalTaskTime: any;
+  editDateMode: boolean = false;
+  placesOptions: any;
 
   constructor(private router: Router, private service: AuthguardServiceService, private activated:ActivatedRoute, private toastr:ToastrService, private datepipe: DatePipe) {
   
@@ -73,8 +56,7 @@ export class EntryDetailsComponent implements OnInit {
     tradeCategory: new FormControl('0'),
     taskDescription: new FormControl(''),
     taskTime: new FormControl('0:00:00'),
-  });
-  
+  });  
 
   ngOnInit(): void {
     this.activated.queryParams.subscribe(params => {
@@ -83,6 +65,7 @@ export class EntryDetailsComponent implements OnInit {
 
     this.getEntryDetails();
     this.getTradeCategories();
+    this.placesOptions= {componentRestrictions:{country: 'AU'}};
   }
 
   getTradeCategories(){
@@ -100,6 +83,16 @@ export class EntryDetailsComponent implements OnInit {
       if (res.status == true) {
         this.entryDetails = res.data;
         this.getSumOfTaskTime(this.entryDetails.tasks)
+      } else if (res.status == false) {
+        this.toastr.error(res.message);
+      }
+    })
+  }
+
+  deleteEntry(){
+    this.service.removeEntry(this.entryId).subscribe((res: any) => {
+      if (res.status == true) {
+        this.timesheet();
       } else if (res.status == false) {
         this.toastr.error(res.message);
       }
@@ -140,13 +133,41 @@ export class EntryDetailsComponent implements OnInit {
             ].join(":");
   }
 
-  // formatTime = (seconds:any) => {
-  //   console.log('seconds', seconds)
-  //   return [Math.floor(seconds/3600),
-  //           Math.floor(seconds/60)%60,
-  //           seconds%60,
-  //           ].join(":");
-  // }
+  handleAddressChange(address: any) {
+    // const userAddress = address.formatted_address;
+    // const userLatitude = address.geometry.location.lat();
+    // const userLongitude = address.geometry.location.lng();
+
+    // console.log(address.formatted_address)
+    const data = {
+      entryId : this.entryId,
+      siteAddress: address.formatted_address
+    }
+
+    this.service.updateSiteAddress(data).subscribe((res: any) => {
+      if(res.status){
+        this.toastr.success('Site Address Updated');
+      } else {
+        this.toastr.error(res.message);
+      }
+    })
+  }
+
+  handleDateChange(date: any){
+    const data = {
+      entryId : this.entryId,
+      startDate: date.target.value
+    }
+
+    this.service.updateEntryDate(data).subscribe((res: any) => {
+      if(res.status){
+        this.toastr.success('Date Updated');
+      } else {
+        this.toastr.error(res.message);
+      }
+    })
+
+  }
   
   addtask(){
     const task = {
@@ -170,6 +191,22 @@ export class EntryDetailsComponent implements OnInit {
           taskTime: '0:00:00'
         })
         this.toastr.success('Updated');
+      } else {
+        this.toastr.error(res.message);
+      }
+    })
+  }
+
+  removeTask(index:any){
+    const data = {
+      entryId: this.entryId,
+      task: this.entryDetails.tasks[index]
+    }
+
+    this.service.removeTask(data).subscribe((res: any) => {
+      if(res.status){
+        this.getEntryDetails();
+        this.toastr.success('Task Removed');
       } else {
         this.toastr.error(res.message);
       }

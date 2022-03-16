@@ -57,8 +57,8 @@ export class AuthguardServiceService {
   user = new BehaviorSubject(null);
 
   //locolhost 
-  url = "http://127.0.0.1:3030/api/";
-  //url="http://167.99.10.209:3030/api/";
+  // url = "http://127.0.0.1:3030/api/";
+  url="http://167.99.10.209:3030/api/";
 
   postLogin(nums: any): Observable<any> {
     let header = new HttpHeaders({ "Authorization": "Bearer " });
@@ -137,6 +137,36 @@ export class AuthguardServiceService {
     return this.http.put(this.url + 'updateEntryDetails', detail, requestOptions).pipe(
       catchError(this.handleError)
     );
+  }
+
+  updateEntryDate(detail: any): Observable<any> {
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.put(this.url + 'updateEntryDate', detail, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateSiteAddress(detail: any): Observable<any> {
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.put(this.url + 'updateSiteAddress', detail, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  removeTask(detail: any): Observable<any>{
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.put(this.url + 'removeTask', detail, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  removeEntry(entryID: any): Observable<any>{
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.delete(this.url+'removeEntry?entry_id='+entryID,requestOptions).pipe(catchError(this.handleError))
   }
 
   getEntryDetails(entryID: any): Observable<any>{

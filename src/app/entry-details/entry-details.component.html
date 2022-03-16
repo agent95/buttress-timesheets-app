@@ -17,13 +17,22 @@
         <div class="row pt-2">
           <div class="col-12">
             <div class="row clock_in_box position-relative">
-              <div class="col-9">
-                <strong class="text-theme2 fs-18">{{entryDetails?.start_time | date:'EE MMM d'}}</strong>
+              <!-- Date -->
+              <div class="col mb-2">
+                <!-- <strong *ngIf="!editDateMode" class="text-theme2 fs-18">{{entryDetails?.start_time | date:'EE MMM d'}}</strong> -->
+                <span>Date</span>
+                <input type="date" autocomplete="off" class="px-4 text-theme2 form-control fs-18 border-0"
+                      (focusout)="handleDateChange($event)" [value]="entryDetails?.start_Date">
               </div>
               
-              <span class="col-3 btn-link text-end" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit> Edit</span>
+              <!-- Site Address -->
+              <div class="pb-2">
+                <!-- <img class="col-1"  src="assets/img/pin.svg" alt="">  -->
+                <span>Address</span>
+                <input ngx-google-places-autocomplete [options]="placesOptions" (onAddressChange)="handleAddressChange($event)" type="text" class="col form-control text-black shadow-none px-4"
+                placeholder="Enter Address" [value]="entryDetails?.site_address">
+              </div>
               
-              <div class="pb-2"><label *ngIf="entryDetails?.site_address"><img src="assets/img/pin.svg" alt=""> <span>{{entryDetails?.site_address}}</span></label></div>
               <div class="col-6 my-4">
                 <span>Start</span>
                 <div class="bg-light p-3 rounded-8 border border-2 text-center">
@@ -34,7 +43,6 @@
                 <span>Stop</span>
                 <div class="bg-light p-3 rounded-8 border border-2 text-center">
                   <div class="fw-500 fs-24 d-block">{{ entryDetails?.end_time | date:'mediumTime'}} </div>
-                  
                 </div>
               </div>
              
@@ -44,15 +52,15 @@
             <div *ngIf="entryDetails?.tasks.length">
               Task Summary
             </div>
-            <div *ngIf="entryDetails?.tasks.length" class="rounded-10 border border-2 bg-light p-3 py-1  mb-4">
-              <div *ngFor="let task of entryDetails?.tasks; let isLast = last" class="py-2" [class.border-bottom]="!isLast">
+            <div *ngIf="entryDetails?.tasks.length" class="rounded-10 border border-2 bg-light p-3 py-1">
+              <div *ngFor="let task of entryDetails?.tasks; let i = index; let isFirst = first; let isLast = last" class="py-2" [class.border-bottom]="!isLast">
                 <div>
                   <div class="row">
-                      <div class="col-9">{{task.tradeCategory}} 
-
-                      </div>
-                    <div class="col-3 text-end">
-                      <button title="Remove" type="button" class="btn-close"></button>
+                      <div class="col-9">{{task.tradeCategory}}  </div>
+                    <div *ngIf="!isFirst" class="col-3 text-end">
+                      <!-- <span class="btn-link mx-2" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit></span>  -->
+                      <span class="btn-link" role="button" title="Remove" (click)="removeTask(i)"><app-icon-minus></app-icon-minus></span>
+                      <!-- <button type="button" role="button" class="btn-close fs-14 text-theme2 fw-600" title="Remove" aria-label="Remove"></button> -->
                     </div>
                     
                   </div>
@@ -61,13 +69,22 @@
                     <div class="col-9">{{task.taskDescription}}</div>
                     <div class="col-3 text-end fs-20 fw-semi-bold ">
                       <div>{{task.taskTime}}
-                      <span class="btn-link" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit></span> 
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+             <!-- Add Task -->
+             <div class="form-group position-relative row justify-content-end my-2">
+              <div class="col-auto">
+                
+                <button class="btn btn-md d-inline-flex w-auto" data-bs-toggle="modal" data-bs-target="#taskModal">
+                  <span class="btn-link" role="button" title="Add Task"><app-icon-plus></app-icon-plus> ADD TASK</span> 
+                </button>
+                </div>
+              </div>
 
              <!-- Total working hrs -->
              <div class="col-12 mb-4">
@@ -89,56 +106,19 @@
                 <span class="fw-500 fs-24 d-block text-danger text-end">00:20</span>
               </div>
             </div> -->
-  
-  
-            <!-- Add Task -->
-            <div class="col-12 my-4 ">
-              <div class="bg-white rounded-10 border border-1">
-                <div class="row mx-0">
-                  <div class="col-12 py-4 border-bottom">
-                    <span class="text-theme2 fs-20 fw-500">Add Task</span>
-                  </div>
-                  <form class="py-4" [formGroup]="addTaskForm">
-  
-                    <div class="form-group row position-relative text-start mb-3">
-                      <label class="fw-600 fs-16  mb-1"> Trade Category
-                      <select class="form-control shadow-none mt-2 px-3 col-12" formControlName="tradeCategory" name="tradeCagtegory"
-                        id="tradeCategory" required>
-                          <option value="i" value="0">Please Select</option>
-                          <option *ngFor="let trade of tradeCategories; let i=index" value="{{trade.tradeName}}">{{trade.tradeName}}</option>
-                      </select>
-                      </label>
-                    </div>
-  
-                    <div class="form-group position-relative text-start mb-3">
-                      <label class="fw-600 fs-16 mb-1" for="">Description</label>
-                      <textarea class="form-control shadow-none fs-18" formControlName="taskDescription" name="taskDescription"
-                        id="taskDescription"></textarea>
-                    </div>
-  
-                    <div class="form-group position-relative text-start mb-3">
-                      <label class="row fw-600 fs-16 mb-1" for="">
-                        <span class="col-9 text-start">Time</span>
-                        <span class="col-3 text-end text-black-50">h:mm:ss</span>
-                       </label>
-                      <input class="form-control shadow-none p-2 fs-26 text-end" formControlName="taskTime" name="taskTime"
-                        id="taskTime"/>
-                    </div>
-  
-                    <div class="form-group position-relative mt-2 row justify-content-end pt-4">
-                      <div class="col-auto">
-                          <button (click)="addtask()" class="btn btn-md btn-outline-primary d-inline-flex w-auto">Add Task</button>
-                        </div>
-                      </div>
-                  </form>
-                </div>
-              </div>
+
+            <!-- // Add Task -->
+
+            <div class="row justify-content-end">
+              <button (click)="timesheet()"
+               class="col-6 btn rounded-8 fs-16 text-end px-3"><img src="assets/img/timesheet.svg"
+               alt=""> Timesheets</button>
             </div>
 
-            <div class="my-5 row gap-3 justify-content-between">
-              <button (click)="timesheet()"
-               class="col btn rounded-8 fs-16"><img src="assets/img/timesheet.svg"
-               alt=""> Timesheets</button>
+            <div class="mb-4 row gap-3 p-3 justify-content-between">
+              
+               <button (click)="deleteEntry()"
+               class="col btn btn-danger rounded-8 fs-16">Delete</button>
               <button (click)="share()"
                class="col button_screens rounded-8 fs-16">Share</button>
             </div>
@@ -187,74 +167,71 @@
     </div>
   
   </main>
-  
 
 
-
-  <!-- EDIT MODAL  -->
-  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <!-- ADD TASK MODAL  -->
+  <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-20">
+      <div class="modal-content rounded-10">
         <div class="modal-header text-center position-relative py-4">
-          <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="editModalLabel">Edit Details</h5>
+          <!-- <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="editModalLabel">Task</h5> -->
           <button type="button" class="btn-close fs-14 text-theme2 fw-600 position-absolute start-10px"
             data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body py-0">
           <div class="row">
             <div class="col-12">
-              <div class="text-center"> ...work in progress </div>
-              <!-- <div class="row py-3 border-bottom">
-                <div class="col-6">
-                  <span class="fs-16 text-theme2 fw-600">Date:</span>
-                  <div class="fs-16 text-theme2 fw-600 bg-light p-3 rounded-8 border border-2" contenteditable="true">{{entryDetails?.start_time | date:'EE MMM d'}}</div>
+              <!-- Add Task -->
+            <div class="col-12 my-4 ">
+              <div class="bg-white rounded-10 border border-1">
+                <div class="row mx-0">
+                  <div class="col-12 py-4 border-bottom">
+                    <span class="text-theme2 fs-20 fw-500">Add Task</span>
+                  </div>
+                  <form class="py-4" [formGroup]="addTaskForm">
+  
+                    <div class="form-group row position-relative text-start mb-3">
+                      <label class="fw-600 fs-16  mb-1"> Trade Category
+                      <select class="form-control shadow-none mt-2 px-3 col-12" formControlName="tradeCategory" name="tradeCagtegory"
+                        id="tradeCategory" required>
+                          <option value="i" value="0">Please Select</option>
+                          <option *ngFor="let trade of tradeCategories; let i=index" value="{{trade.tradeName}}">{{trade.tradeName}}</option>
+                      </select>
+                      </label>
+                    </div>
+  
+                    <div class="form-group position-relative text-start mb-3">
+                      <label class="fw-600 fs-16 mb-1" for="">Description</label>
+                      <textarea class="form-control shadow-none fs-18" formControlName="taskDescription" name="taskDescription"
+                        id="taskDescription"></textarea>
+                    </div>
+  
+                    <div class="form-group position-relative text-start mb-3">
+                      <label class="row fw-600 fs-16 mb-1" for="">
+                        <span class="col-9 text-start">Time</span>
+                        <span class="col-3 text-end text-black-50">h:mm:ss</span>
+                       </label>
+                      <input class="form-control shadow-none p-2 fs-26 text-end" formControlName="taskTime" name="taskTime"
+                        id="taskTime"/>
+                    </div>
+  
+                    <div class="form-group position-relative mt-2 row justify-content-end pt-4">
+                      <div class="col-auto">
+                          <button (click)="addtask()" data-bs-dismiss="modal"  class="btn btn-md btn-outline-primary d-inline-flex w-auto">Add Task</button>
+                        </div>
+                      </div>
+                  </form>
                 </div>
-              </div> -->
-              <!-- <div class="row py-3 border-bottom">
-                <div class="col-3">
-                  <span class="fs-16 text-theme2 fw-600">Start:</span>
-                </div>
-                <div class="col">
-                  <span class="fs-16 text-theme2 fw-600">{{start_time | date: 'MMM d/y'}}</span>
-                </div>
-                <div class="col-3 text-end">
-                  <span class="fs-16 text-theme2 fw-600">{{start_time | date: 'h:mm'}}</span>
-                </div>
-              </div> -->
-              <!-- <div class="row py-3 border-bottom">
-                <div class="col-3">
-                  <span class="fs-16 text-theme2 fw-600">End: </span>
-                </div>
-                <div class="col">
-                  <span class="fs-16 text-theme2 fw-600">{{stop_time | date : 'MMM d/y' }}</span>
-                </div>
-                <div class="col-3 text-end">
-                  <span class="fs-16 text-theme2 fw-600">{{stop_time | date: 'h:mm'}}</span>
-                </div>
-              </div> -->
-              <!-- <div class="row py-4">
-                <div class="col-6">
-                  <span class="fs-16 text-theme2 fw-600">Total Hours</span>
-                </div>
-                <div class="col-6 text-end">
-                  <span class="fs-16 text-theme2 fw-600">{{total_hrs}}</span>
-                </div>
-              </div> -->
+              </div>
+            </div>
+
+              
             </div> 
           </div>
         </div>
-        <!-- <div class="modal-footer border-0 py-3">
-          <div class="row mx-0 w-100">
-            <div class="col-6">
-              <button type="button" class="button_screens rounded-8 fs-15" data-bs-dismiss="modal">Cancel</button>
-            </div>
-            <div class="col-6">
-              <button type="button" (click)="saveNote()"data-bs-dismiss="modal" class="button_screens rounded-8 fs-15">Save</button>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
+  
 
   
