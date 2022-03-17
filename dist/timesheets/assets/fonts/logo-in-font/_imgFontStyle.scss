@@ -1,0 +1,83 @@
+@import "variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?g1z6nn');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?g1z6nn#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?g1z6nn') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?g1z6nn') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?g1z6nn##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.img {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.img-drawing-1 {
+  &:before {
+    content: $img-drawing-1; 
+  }
+}
+.img-drawing .path1 {
+  &:before {
+    content: $img-drawing-path1;  
+    color: rgb(160, 215, 238);
+  }
+}
+.img-drawing .path2 {
+  &:before {
+    content: $img-drawing-path2;  
+    margin-left: -0.70703125em;  
+    color: rgb(240, 212, 157);
+  }
+}
+.img-drawing .path3 {
+  &:before {
+    content: $img-drawing-path3;  
+    margin-left: -0.70703125em;  
+    color: rgb(119, 198, 232);
+  }
+}
+.img-drawing .path4 {
+  &:before {
+    content: $img-drawing-path4;  
+    margin-left: -0.70703125em;  
+    color: rgb(230, 179, 81);
+  }
+}
+.img-drawing .path5 {
+  &:before {
+    content: $img-drawing-path5;  
+    margin-left: -0.70703125em;  
+    color: rgb(81, 182, 225);
+  }
+}
+.img-drawing .path6 {
+  &:before {
+    content: $img-drawing-path6;  
+    margin-left: -0.70703125em;  
+    color: rgb(222, 155, 24);
+  }
+}
+.img-drawing .path7 {
+  &:before {
+    content: $img-drawing-path7;  
+    margin-left: -0.70703125em;  
+    color: rgb(18, 157, 216);
+  }
+}
+

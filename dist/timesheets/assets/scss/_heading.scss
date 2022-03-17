@@ -1,0 +1,191 @@
+.heading_websites {
+  position: relative;
+  padding-left: 20px;
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: $theme1;
+    height: 100%;
+    width: 6px;
+    border-radius: 0px 10px 10px 0;
+  }
+  & span {
+    font-weight: 800;
+    font-size: 13px;
+    display: inline-block;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    color: $theme1;
+    text-transform: uppercase;
+  }
+  & h2 {
+    font-weight: 800;
+    color: $theme2;
+    font-size: 28px;
+    text-transform: uppercase;
+  }
+}
+
+.heading_websites.center-design {
+  padding-left: 0;
+  text-align: center;
+  &::after {
+    position: absolute;
+    content: "";
+    top: auto;
+    bottom: -23px;
+    left: 0;
+    background-color: #00a496;
+    height: 6px;
+    width: 80px;
+    border-radius: 10px 10px 0px 0;
+    right: 0;
+    margin: 0 auto;
+  }
+  & span {
+    margin-bottom: 10px;
+  }
+  & h2 {
+    margin-bottom: 20px;
+  }
+}
+
+.heading_websites.white {
+  &::after {
+    background-color: $white;
+  }
+  & span {
+    margin-bottom: 10px;
+    color: $white !important;
+  }
+  & h2 {
+    margin-bottom: 20px;
+    color: $white !important;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@mixin heading_websites-mixin-min-sm() {
+}
+// Medium devices (tablets, 768px and up)
+@mixin heading_websites-mixin-min-md() {
+}
+// Large devices (desktops, 992px and up)
+@mixin heading_websites-mixin-min-lg() {
+}
+// X-Large devices (large desktops, 1200px and up)
+@mixin heading_websites-mixin-min-xl() {
+}
+// XX-Large devices (larger desktops, 1400px and up)
+@mixin heading_websites-mixin-min-xxl() {
+}
+// X-Small devices (portrait phones, less than 576px)
+@mixin heading_websites-mixin-max-xs() {
+}
+// Small devices (landscape phones, less than 768px)
+@mixin heading_websites-mixin-max-sm() {
+  .heading_websites {
+    padding-left: 12px;
+    & span {
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+    & h2 {
+      font-size: 18px;
+      margin: 0;
+      line-height: 25px;
+    }
+    &::after {
+      width: 4px;
+    }
+  }
+  .heading_websites.center-design {
+    padding-left: 0;
+    text-align: center;
+    &::after {  
+      bottom: -13px; 
+      height: 4px;
+      width: 58px; 
+    }
+    & span {
+      margin-bottom: 4px;
+    } 
+  }
+}
+// Medium devices (tablets, less than 992px)
+@mixin heading_websites-mixin-max-md() {
+}
+// Large devices (desktops, less than 1200px)
+@mixin heading_websites-mixin-max-lg() {
+  .heading_websites {
+    position: relative;
+    padding-left: 20px;
+    & span {
+      font-size: 12px;
+    }
+    & h2 {
+      font-size: 22px;
+      margin: 0;
+    }
+  }
+}
+// X-Large devices (large desktops, less than 1400px)
+@mixin heading_websites-mixin-max-xl() {
+}
+
+// No media query for `xs` since this is the default in Bootstrap
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  @include heading_websites-mixin-min-sm();
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  @include heading_websites-mixin-min-md();
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  @include heading_websites-mixin-min-lg();
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  @include heading_websites-mixin-min-xl();
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+  @include heading_websites-mixin-min-xxl();
+}
+
+// X-Large devices (large desktops, less than 1400px)
+@media (max-width: 1399.98px) {
+  @include heading_websites-mixin-max-xl();
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+  @include heading_websites-mixin-max-lg();
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+  @include heading_websites-mixin-max-md();
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+  @include heading_websites-mixin-max-sm();
+}
+
+// X-Small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  @include heading_websites-mixin-max-xs();
+}
+
+// XX-Large devices (larger desktops)
+// No media query since the xxl breakpoint has no upper bound on its width

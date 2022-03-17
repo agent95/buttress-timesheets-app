@@ -1,0 +1,91 @@
+{
+    "IcoMoonType": "selection",
+    "icons": [
+        {
+            "icon": {
+                "paths": [
+                    "M752.889 56.89c149.333-0.533 271.111 120.889 271.111 270.222v142.222c0 23.644-19.022 42.667-42.667 42.667h-56.889c-23.644 0-42.667-19.022-42.667-42.667v-142.222c0-70.934-58.133-128.712-129.244-128-70.399 0.712-126.756 59.2-126.756 129.601v126.399h85.333c47.111 0 85.333 38.222 85.333 85.333v341.333c0 47.111-38.222 85.333-85.333 85.333h-625.777c-47.111 0-85.333-38.222-85.333-85.333v-341.333c0-47.111 38.222-85.333 85.333-85.333h398.222v-125.333c0-149.333 120-272.355 269.333-272.889z"
+                ],
+                "attrs": [
+                    {}
+                ],
+                "isMulticolor": false,
+                "isMulticolor2": false,
+                "tags": [
+                    "lock-open"
+                ],
+                "defaultCode": 62401,
+                "grid": 0
+            },
+            "attrs": [
+                {}
+            ],
+            "properties": {
+                "order": 9,
+                "id": 2,
+                "name": "lock-open",
+                "ligatures": "",
+                "prevSize": 32,
+                "code": 62401
+            },
+            "setIdx": 1,
+            "setId": 0,
+            "iconIdx": 0
+        }
+    ],
+    "height": 1024,
+    "metadata": {
+        "name": "img-global",
+        "url": "https://www.imgglobalinfotech.com",
+        "designer": "Jitendra Kumar Bijarnia",
+        "designerURL": "https://www.imgglobalinfotech.com",
+        "license": "IMG Global Infotech Icons",
+        "licenseURL": "https://www.imgglobalinfotech.com"
+    },
+    "preferences": {
+        "showGlyphs": true,
+        "showCodes": true,
+        "showQuickUse": true,
+        "showQuickUse2": true,
+        "showSVGs": true,
+        "fontPref": {
+            "prefix": "img-",
+            "metadata": {
+                "fontFamily": "img-global",
+                "majorVersion": 1,
+                "minorVersion": 0,
+                "fontURL": "https://www.imgglobalinfotech.com",
+                "description": "IMG Global Infotech Icons",
+                "copyright": "IMG Global Infotech Icons",
+                "designer": "Jitendra Kumar Bijarnia",
+                "designerURL": "https://www.imgglobalinfotech.com",
+                "license": "IMG Global Infotech Icons",
+                "licenseURL": "https://www.imgglobalinfotech.com"
+            },
+            "metrics": {
+                "emSize": 1024,
+                "baseline": 12.5,
+                "whitespace": 0
+            },
+            "embed": false,
+            "ie7": true,
+            "noie8": false,
+            "includeMetadata": true,
+            "showMetrics": false,
+            "showSelector": true,
+            "selector": "class",
+            "classSelector": ".img",
+            "showMetadata": true,
+            "showVersion": true
+        },
+        "imagePref": {
+            "prefix": "icon-",
+            "png": true,
+            "useClassSelector": true,
+            "color": 0,
+            "bgColor": 16777215
+        },
+        "historySize": 50,
+        "gridSize": 16
+    }
+}
