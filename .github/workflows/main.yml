@@ -39,26 +39,13 @@ jobs:
         # You may pin to the exact commit or the version.
         # uses: kevinpainchaud/simple-ftp-deploy-action@2c6e7dfe809abd4f8f687a78b5d79efaf5c439ad
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
-        with:
-          # FTP host
-          ftp_host: 167.99.10.209
-          # FTP username
-          ftp_username: root
-          # FTP password
-          ftp_password: Buttre55Timesh33tsApp
-          # The local folder to copy
-          local_source_dir: "dist/timesheets"
-          # The remote folder
-          dist_target_dir: "var/www/html"
-          # Delete files not present in the local folder on the remote folder
-          delete: true # optional, default is false 
-          # Download only newer files
-          only_newer: true # optional, default is false
-          # Ignore time when deciding whether to download
-          ignore_time: false # optional, default is false
-          # Ignore file(s) and/or directorie(s)
-          exclude: "'^assets/'" # optional, default is 
-          # Disable SSL certificate verification
-          disable_ssl_certificate_verification: true # optional, default is true
-          # Optional raw string of flags for lftp eg. --no-empty-dirs
-          other_flags: --no-empty-dirs # optional, default is 
+          with:
+            ftp_host: ${{ secrets.FTP_HOST }}
+            ftp_username: ${{ secrets.FTP_USERNAME }}
+            ftp_password: ${{ secrets.FTP_PASSWORD }}
+            local_source_dir: "dist/timesheets"
+            dist_target_dir: "var/www/html"
+            delete: "true"
+            exclude: "'^assets/'"
+
+          
