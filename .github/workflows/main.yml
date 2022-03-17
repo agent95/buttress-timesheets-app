@@ -47,7 +47,7 @@ jobs:
           # FTP password
           ftp_password: Buttre55Timesh33tsApp
           # The local folder to copy
-          local_source_dir: /Users/roymogoko/Documents/Sites/buttress-app/dist/timesheets/
+          local_source_dir: /dist/timesheets/
           # The remote folder
           dist_target_dir: /var/www/html
           # Delete files not present in the local folder on the remote folder
