@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~ngx-toastr/toastr';
-html, body { height: 100%; }
+html, body { 
+    height: 100vh; 
+    overscroll-behavior-y: none; 
+    position: fixed;
+    overflow: hidden;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.main-scrollbar {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch; /* enables “momentum” (smooth) scrolling */
+    
+  }
+ 
+
+.screens-footer {
+    position: fixed;
+    bottom: 0;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+}

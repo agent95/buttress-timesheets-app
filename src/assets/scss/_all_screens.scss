@@ -4,6 +4,8 @@
 
 .main-scrollbar {
   display: block;
+  height: 100vh;
+  padding-bottom: 100px;
 }
 .form-control {
   height: 50px;
@@ -45,7 +47,7 @@
   bottom: 0;
 }
 .screens_scroll_part {
-  height: calc(100vh - 75px);
+  height: calc(100vh - 150px);
   overflow-y: auto;
 }
 .active_menu::after {

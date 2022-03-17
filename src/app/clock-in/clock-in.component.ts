@@ -18,12 +18,12 @@ export class ClockInComponent implements OnInit {
   siteName: any;
   siteTime: any;
   second: number = 0;
-  minute: string = '';
+  minute: string = '00:00:00';
   hours: number = 0;
   time: boolean = true;
   clockoutvar: any;
   clockin: any;
-  totalhrs: any;
+  totalhrs: string = "00:00:00";
   N:any;
   note: any;
   comment: any;
@@ -57,9 +57,10 @@ export class ClockInComponent implements OnInit {
     setInterval(() => {
       // updating the time every second 
       start.setSeconds(start.getSeconds() + 1);
-      this.minute = `${format(start.getUTCHours())}:${format(start.getUTCMinutes())}:${format(start.getUTCSeconds())}`;
+      // console.log('start: ', start)
+      this.minute = `${pad(start.getUTCHours())}:${pad(start.getUTCMinutes())}:${pad(start.getUTCSeconds())}`;
     }, 1000)
-    function format(n: string | number) {
+    function pad(n: string | number) {
       return n < 10 ? '0' + n : '' + n;
     }
 

@@ -12,8 +12,9 @@
         </div>
       </div>
     </div>
-    <div class="screens_scroll_part pt-5">
-      <div class="container pt-5">
+
+    <div class="screens_scroll_part py-5">
+      <div class="container py-5">
         <div class="row pt-2">
           <div class="col-12">
             <div class="row clock_in_box position-relative">
@@ -35,13 +36,13 @@
               
               <div class="col-6 my-4">
                 <span>Start</span>
-                <div class="bg-light p-3 rounded-8 border border-2 text-center">
+                <div class="bg-light p-1 rounded-8 border border-2 text-center">
                   <div class="fw-500 fs-24 d-block"> {{  entryDetails?.start_time | date:'mediumTime'}} </div>
                 </div>
               </div>
               <div class="col-6 my-4">
                 <span>Stop</span>
-                <div class="bg-light p-3 rounded-8 border border-2 text-center">
+                <div class="bg-light p-1 rounded-8 border border-2 text-center">
                   <div class="fw-500 fs-24 d-block">{{ entryDetails?.end_time | date:'mediumTime'}} </div>
                 </div>
               </div>
@@ -66,8 +67,8 @@
                   </div>
                
                   <div class="row">
-                    <div class="col-9">{{task?.taskDescription}}</div>
-                    <div class="col-3 text-end fs-20 fw-semi-bold ">
+                    <div class="col-12 text-black-50">{{task?.taskDescription}}</div>
+                    <div class="col text-end fs-20 fw-semi-bold ">
                       <div>{{task?.taskTime}}
                       </div>
                     </div>
@@ -140,6 +141,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Footer -->
     <div class="screens_footer">
       <div class="container">
         <div class="row mx-0 align-items-center">
@@ -173,7 +176,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content rounded-10">
         <div class="modal-header text-center position-relative py-4">
-          <!-- <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="editModalLabel">Task</h5> -->
+          <h5 class="modal-title text-center fs-18 fw-bold text-theme2 w-100" id="editModalLabel">Add Task</h5>
           <button type="button" class="btn-close fs-14 text-theme2 fw-600 position-absolute start-10px"
             data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -184,9 +187,9 @@
             <div class="col-12 my-4 ">
               <div class="bg-white rounded-10 border border-1">
                 <div class="row mx-0">
-                  <div class="col-12 py-4 border-bottom">
+                  <!-- <div class="col-12 py-4 border-bottom">
                     <span class="text-theme2 fs-20 fw-500">Add Task</span>
-                  </div>
+                  </div> -->
                   <form class="py-4" [formGroup]="addTaskForm">
   
                     <div class="form-group row position-relative text-start mb-3">

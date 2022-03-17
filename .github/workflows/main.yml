@@ -57,7 +57,7 @@ jobs:
           # Ignore time when deciding whether to download
           ignore_time: false # optional, default is false
           # Ignore file(s) and/or directorie(s)
-          exclude: false # optional, default is 
+          exclude: "dist/timesheets/assets" # optional, default is 
           # Disable SSL certificate verification
           disable_ssl_certificate_verification: true # optional, default is true
           # Optional raw string of flags for lftp eg. --no-empty-dirs

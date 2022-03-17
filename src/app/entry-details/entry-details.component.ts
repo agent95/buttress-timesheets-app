@@ -25,8 +25,8 @@ export class EntryDetailsComponent implements OnInit {
   // NEW VARS
 
   sitename: string = "";
-  start_time: string = "0";
-  stop_time: string = "0";
+  start_time: string = "0:00:00";
+  stop_time: string = "0:00:00";
   total_hrs: number = 10;
   taskSummary: any = [];
   entryId: any;
@@ -34,8 +34,7 @@ export class EntryDetailsComponent implements OnInit {
   entryDetails: any;
   tradeCategories: any;
   N: any;
-  totalTaskTime: any;
-  editDateMode: boolean = false;
+  totalTaskTime: string = "00:00:00";
   placesOptions: any;
 
   constructor(private router: Router, private service: AuthguardServiceService, private activated:ActivatedRoute, private toastr:ToastrService, private datepipe: DatePipe) {
@@ -146,7 +145,7 @@ export class EntryDetailsComponent implements OnInit {
 
     this.service.updateEntryTime(data).subscribe((res: any) => {
       if(res.status){
-        this.toastr.success('Total Time Updated');
+        // this.toastr.success('Total Time Updated');
       } else {
         this.toastr.error(res.message);
       }
@@ -162,7 +161,7 @@ export class EntryDetailsComponent implements OnInit {
 
     this.service.updateSiteAddress(data).subscribe((res: any) => {
       if(res.status){
-        this.toastr.success('Site Address Updated');
+        this.toastr.success('');
       } else {
         this.toastr.error(res.message);
       }
