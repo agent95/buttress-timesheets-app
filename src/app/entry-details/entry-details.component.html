@@ -143,30 +143,7 @@
     </div>
 
     <!-- Footer -->
-    <div class="screens_footer">
-      <div class="container">
-        <div class="row mx-0 align-items-center">
-          <div class="col text-center">
-            <a class="footer_mennus position-relative" (click)="index()"style="cursor: pointer"><img src="assets/img/home.svg" alt=""></a>
-          </div>
-          <div class="col text-center">
-            <a class="footer_mennus position-relative" (click)="profile()"style="cursor: pointer"><img src="assets/img/user.svg" alt=""></a>
-          </div>
-          <div class="col text-center middle_menus">
-            <a class="footer_mennus position-relative active_menu" (click)="clock()"style="cursor: pointer"><img class="bg-white rounded-pill"
-                src="assets/img/active_clock.svg" alt=""></a>
-          </div>
-          <div class="col text-center">
-            <a class="footer_mennus position-relative" (click)="timesheet()"style="cursor: pointer"><img src="assets/img/timesheet.svg"
-                alt=""></a>
-          </div>
-          <div class="col text-center">
-            <a class="footer_mennus position-relative" (click)="blankpage()" style="cursor: pointer"><img
-                src="assets/img/settings.svg" alt=""></a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-footer activeTab="clock"></app-footer>
   
   </main>
 

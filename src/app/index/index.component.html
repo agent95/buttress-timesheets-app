@@ -37,30 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="screens_footer">
-      <div class="container">
-        <div class="row mx-0 align-items-center">
-          <div class="col text-center">
-            <a class="footer_mennus position-relative active_menu" (click)="index()"style="cursor: pointer"><img
-                src="assets/img/active_home.svg" alt=""></a>
-          </div>
-          <div class="col text-center">
-            <a class="footer_mennus position-relative"style="cursor: pointer" (click)="profile()"#p><img src="assets/img/user.svg" alt=""></a>
-          </div>
-          <div class="col text-center middle_menus">
-            <a class="footer_mennus position-relative"style="cursor: pointer" (click)="clock()"#c><img class="bg-white rounded-pill"
-                src="assets/img/watch.svg" alt=""></a>
-          </div>
-          <div class="col text-center">
-            <a class="footer_mennus position-relative" style="cursor: pointer"(click)="timesheet()"#t><img src="assets/img/timesheet.svg"
-                alt=""></a>
-          </div>
-          <div class="col text-center">
-            <a class="footer_mennus position-relative"style="cursor: pointer" (click)="blankpage()" #b><img src="assets/img/settings.svg"
-                alt=""></a>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <app-footer activeTab="home"></app-footer>
 
   </main>

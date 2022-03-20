@@ -319,12 +319,7 @@ export class ClockComponent implements OnInit {
     localStorage.removeItem("token")
     this.router.navigate(['/verify', this.N]);
   }
-  blankpage() {
-
-    this.router.navigate(["/blankpage"]);
-
-  }
-
+  
   sendData(){
     const getTime = new Date().getTime();
     const currentTIME = this.datepipe.transform(getTime, 'yyyy-MM-ddTHH:mm:ss');

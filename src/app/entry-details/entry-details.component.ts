@@ -234,49 +234,6 @@ export class EntryDetailsComponent implements OnInit {
   saveNote(){}
   share(){}
 
-  logout(){
-    this.N=""
-    this.toastr.success("logout successfully");
-    localStorage.removeItem("token")
-    // this.router.navigate(['/verify', this.N]);
-  }
-  blankpage(){
-    this.router.navigate(["/blankpage"]);
-  }
-
-
-  index() { this.router.navigate(['/index']) }
-  profile() { this.router.navigate(['/profile']) }
-  clock() {
-    if (localStorage.getItem("siteAddress") == null) {
-      this.router.navigate(['/clock'])
-
-    }
-    else {
-      if (localStorage.getItem("siteAddress") == "") {
-        if (localStorage.getItem("siteTime") !== null) {
-          this.router.navigate(['/clock-in'])
-
-        }
-        else if (localStorage.getItem("siteTime") == null) {
-          this.router.navigate(['/clock-out'])
-
-        }
-        else {
-          this.router.navigate(['/clock'])
-        }
-      }
-      else {
-        if (localStorage.getItem("siteTime") == null) {
-          this.router.navigate(['/clock-out'])
-        }
-        else {
-
-          this.router.navigate(['/clock-in'])
-        }
-      }
-    }
-  }
   timesheet() { this.router.navigate(['/timesheet']) }
   rout() {
     window.history.back();

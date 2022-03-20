@@ -40,6 +40,7 @@ import { IconEditComponent } from './icon-edit/icon-edit.component';
 import { IconPlusComponent } from './icon-plus/icon-plus.component';
 import { IconXComponent } from './icon-x/icon-x.component';
 import { IconMinusComponent } from './icon-minus/icon-minus.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { IconMinusComponent } from './icon-minus/icon-minus.component';
     IconPlusComponent,
     IconXComponent,
     IconMinusComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

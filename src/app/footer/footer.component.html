@@ -1,0 +1,27 @@
+<div class="screens_footer">
+    <div class="container">
+      <div class="row mx-0 align-items-center">
+        <div class="col text-center">
+          <a class="footer_mennus position-relative" [class.active_menu]="activeTab == 'home'" (click)="index()"style="cursor: pointer"><img [src]="(activeTab=='home')? 'assets/img/active_home.svg':'assets/img/home.svg'" alt=""></a>
+        </div>
+        <div class="col text-center">
+          <a class="footer_mennus position-relative" [class.active_menu]="activeTab == 'timesheet'" (click)="timesheet()"style="cursor: pointer">
+            <img [src]="(activeTab == 'timesheet')? 'assets/img/active_timesheet.svg' : 'assets/img/timesheet.svg'"
+            alt=""></a>
+        </div>
+        <div class="col text-center middle_menus">
+          <a class="footer_mennus position-relative" [class.active_menu]="activeTab == 'clock'" (click)="clock()"style="cursor: pointer"><img class="bg-white rounded-pill"
+            [src]="(activeTab == 'clock')? 'assets/img/active_clock.svg' : 'assets/img/clock.svg'" alt=""></a>
+          </div>
+        <div class="col text-center">
+          <a class="footer_mennus position-relative" [class.active_menu]="activeTab == 'profile'" (click)="profile()"style="cursor: pointer">
+            <img [src]="(activeTab == 'profile')? 'assets/img/active_user.svg' : 'assets/img/user.svg' " alt=""></a>
+        </div>
+        <div class="col text-center">
+          <a class="footer_mennus position-relative" [class.active_menu]="activeTab == 'settings'" (click)="blankpage()" style="cursor: pointer">
+            <img [src]="(activeTab == 'settings')? 'assets/img/active_settings.svg':'assets/img/settings.svg'"
+              alt=""></a>
+        </div>
+      </div>
+    </div>
+  </div>
