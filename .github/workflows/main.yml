@@ -35,17 +35,17 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
 
-      - name: Simple FTP deploy
-        # You may pin to the exact commit or the version.
-        # uses: kevinpainchaud/simple-ftp-deploy-action@2c6e7dfe809abd4f8f687a78b5d79efaf5c439ad
-        uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
-        with:
-          ftp_host: ${{ secrets.FTP_HOST }}
-          ftp_username: ${{ secrets.FTP_USERNAME }}
-          ftp_password: ${{ secrets.FTP_PASSWORD }}
-          local_source_dir: "dist/timesheets"
-          dist_target_dir: "var/www/html"
-          delete: "true"
-          exclude: "'^assets/'"
+#       - name: Simple FTP deploy
+#         # You may pin to the exact commit or the version.
+#         # uses: kevinpainchaud/simple-ftp-deploy-action@2c6e7dfe809abd4f8f687a78b5d79efaf5c439ad
+#         uses: kevinpainchaud/simple-ftp-deploy-action@v1.2.1
+#         with:
+#           ftp_host: ${{ secrets.FTP_HOST }}
+#           ftp_username: ${{ secrets.FTP_USERNAME }}
+#           ftp_password: ${{ secrets.FTP_PASSWORD }}
+#           local_source_dir: "dist/timesheets"
+#           dist_target_dir: "var/www/html"
+#           delete: "true"
+#           exclude: "'^assets/'"
 
           
