@@ -59,7 +59,7 @@
               <div class="col-6 mt-4 mb-2">
                 <span>Time In</span>
                 <div class="bg-light p-1 rounded-8 border border-2 text-center">
-                  <input type="time" autocomplete="off" class="px-2 text-theme2 form-control fs-16 border-0"
+                  <input type="time" step="1" autocomplete="off" class="px-2 text-theme2 form-control fs-16 border-0"
                       (focusout)="updateClockIn($event)" [value]="time_in">
                   <!-- <div class="fw-500 fs-24 d-block"> {{  entryDetails?.start_time | date:'mediumTime' }} </div> -->
                 </div>  
@@ -67,7 +67,7 @@
               <div class="col-6 mt-4 mb-2">
                 <span>Time Out</span>
                 <div class="bg-light p-1 rounded-8 border border-2 text-center">
-                  <input type="time" autocomplete="off" [placeholder]="entryDetails?.end_time" class="px-2 text-theme2 form-control fs-16 border-0"
+                  <input type="time" step="1" autocomplete="off" [placeholder]="entryDetails?.end_time" class="px-2 text-theme2 form-control fs-16 border-0"
                   (focusout)="updateClockOut($event)" [value]="time_out">
                   <!-- <div class="fw-500 fs-24 d-block">{{ entryDetails?.end_time | date:'hh:mm:ss'}} </div> -->
                 </div>
@@ -77,12 +77,16 @@
               <div class="col-12 mb-2">
                 <div class="bg-light px-3 rounded-8 border border-2 text-center">
                   <div class="row">
-                    <!-- <div class="fw-500 fs-24 d-block col text-start">Total</div> -->
+                    <div class="fw-500 fs-24 d-block col text-start">Total</div>
                     <div class="col text-end">
-                      <span class="fw-500 fs-24 d-block">{{timeDifference}}</span>
+                      <span class="fw-500 fs-24 d-block">{{timeDiff}}</span>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div *ngIf="totalTaskTime > timeDiff" class="col-12 text-danger">
+                Allocated time is greater than Total time.
               </div>
 
               <div *ngIf="unallocatedTime"  class="col-12 mb-2">
@@ -137,9 +141,9 @@
 
              <!-- Total working hrs -->
              <div class="col-12 mb-4">
-              <div class="bg-light p-3 rounded-8 border border-2 text-center">
+              <div class="bg-light px-3 rounded-8 border border-2 text-center">
                 <div class="row">
-                  <div class="fw-500 fs-24 d-block col text-start">Total</div>
+                  <div class="fw-500 fs-24 d-block col text-start">Allocated Time</div>
                   <div class="col text-end">
                     <span class="fw-500 fs-24 d-block">{{totalTaskTime}}</span>
                   </div>
