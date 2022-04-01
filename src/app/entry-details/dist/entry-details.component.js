@@ -10,6 +10,9 @@ exports.EntryDetailsComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var EntryDetailsComponent = /** @class */ (function () {
+    // unallocatedTime: string = "";
+    // time_in: any;
+    // time_out: any;
     function EntryDetailsComponent(router, service, activated, toastr, datepipe) {
         var _this = this;
         this.router = router;
@@ -19,11 +22,12 @@ var EntryDetailsComponent = /** @class */ (function () {
         this.datepipe = datepipe;
         // NEW VARS
         this.sitename = "";
-        this.start_time = "0:00:00";
-        this.stop_time = "0:00:00";
         this.total_hrs = 10;
         this.taskSummary = [];
         this.totalTaskTime = "00:00:00";
+        this._timeDiff = "";
+        this._time_in = "";
+        this._time_out = "";
         this.noteForm = new forms_1.FormGroup({
             message: new forms_1.FormControl('')
         });
@@ -34,7 +38,7 @@ var EntryDetailsComponent = /** @class */ (function () {
             taskTime: new forms_1.FormControl('0:00:00')
         });
         this.timestrToSec = function (timestr) {
-            var parts = timestr.split(":");
+            var parts = timestr && timestr.split(":");
             return (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60) + (parseInt(parts[2]));
         };
         this.pad = function (num) {
@@ -60,6 +64,58 @@ var EntryDetailsComponent = /** @class */ (function () {
         this.getEntryDetails();
         this.getTradeCategories();
         this.placesOptions = { componentRestrictions: { country: 'AU' } };
+        // this._time_out = this.entryDetails?.time_out ?? this.entryDetails?.end_time;
+    };
+    Object.defineProperty(EntryDetailsComponent.prototype, "time_in", {
+        get: function () {
+            this.timeDifference = this.calcTimeDifference(this._time_in, this._time_out);
+            return this._time_in;
+        },
+        set: function (val) {
+            this._time_in = val;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(EntryDetailsComponent.prototype, "time_out", {
+        get: function () {
+            this.timeDifference = this.calcTimeDifference(this._time_in, this._time_out);
+            return this._time_out;
+        },
+        set: function (val) {
+            this._time_out = val;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(EntryDetailsComponent.prototype, "timeDifference", {
+        get: function () {
+            return this._timeDiff;
+        },
+        set: function (val) {
+            this._timeDiff = val;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(EntryDetailsComponent.prototype, "unallocatedTime", {
+        get: function () {
+            return (this.timeDifference > this.totalTaskTime) ? this.calcTimeDifference(this.totalTaskTime, this.timeDifference) : "";
+        },
+        enumerable: false,
+        configurable: true
+    });
+    EntryDetailsComponent.prototype.calcTimeDifference = function (start, end) {
+        var diff = this.timestrToSec(end) - this.timestrToSec(start);
+        return this.formatTime(diff);
+    };
+    EntryDetailsComponent.prototype.updateClockIn = function (val) {
+        this.time_in = val.target.value;
+        this.updateTimeInOut();
+    };
+    EntryDetailsComponent.prototype.updateClockOut = function (val) {
+        this.time_out = val.target.value;
+        this.updateTimeInOut();
     };
     EntryDetailsComponent.prototype.getTradeCategories = function () {
         var _this = this;
@@ -75,9 +131,13 @@ var EntryDetailsComponent = /** @class */ (function () {
     EntryDetailsComponent.prototype.getEntryDetails = function () {
         var _this = this;
         this.service.getEntryDetails(this.entryId).subscribe(function (res) {
+            var _a, _b, _c, _d, _e, _f;
             if (res.status == true) {
                 _this.entryDetails = res.data;
                 _this.getSumOfTaskTime(_this.entryDetails.tasks);
+                _this._time_in = _this.datepipe.transform((_b = (_a = _this.entryDetails) === null || _a === void 0 ? void 0 : _a.time_in) !== null && _b !== void 0 ? _b : (_c = _this.entryDetails) === null || _c === void 0 ? void 0 : _c.start_time, 'HH:mm:ss') || "";
+                _this._time_out = _this.datepipe.transform((_e = (_d = _this.entryDetails) === null || _d === void 0 ? void 0 : _d.time_out) !== null && _e !== void 0 ? _e : (_f = _this.entryDetails) === null || _f === void 0 ? void 0 : _f.end_time, 'HH:mm:ss') || "";
+                _this.timeDifference = _this.calcTimeDifference(_this._time_in, _this._time_out);
             }
             else if (res.status == false) {
                 _this.toastr.error(res.message);
@@ -122,6 +182,22 @@ var EntryDetailsComponent = /** @class */ (function () {
             totalTaskTime: this.totalTaskTime
         };
         this.service.updateEntryTime(data).subscribe(function (res) {
+            if (res.status) {
+                // this.toastr.success('Total Time Updated');
+            }
+            else {
+                _this.toastr.error(res.message);
+            }
+        });
+    };
+    EntryDetailsComponent.prototype.updateTimeInOut = function () {
+        var _this = this;
+        var data = {
+            entryId: this.entryId,
+            timeIn: this.entryDetails.start_Date + "T" + this.time_in,
+            timeOut: this.entryDetails.start_Date + "T" + this.time_out
+        };
+        this.service.updateTimeInOut(data).subscribe(function (res) {
             if (res.status) {
                 // this.toastr.success('Total Time Updated');
             }

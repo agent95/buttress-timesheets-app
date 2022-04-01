@@ -25,8 +25,6 @@ export class EntryDetailsComponent implements OnInit {
   // NEW VARS
 
   sitename: string = "";
-  start_time: string = "0:00:00";
-  stop_time: string = "0:00:00";
   total_hrs: number = 10;
   taskSummary: any = [];
   entryId: any;
@@ -36,6 +34,13 @@ export class EntryDetailsComponent implements OnInit {
   N: any;
   totalTaskTime: string = "00:00:00";
   placesOptions: any;
+  _timeDiff: string = "";
+  _time_in: string = "";
+  _time_out: string = "";
+  // unallocatedTime: string = "";
+
+  // time_in: any;
+  // time_out: any;
 
   constructor(private router: Router, private service: AuthguardServiceService, private activated:ActivatedRoute, private toastr:ToastrService, private datepipe: DatePipe) {
   
@@ -65,6 +70,53 @@ export class EntryDetailsComponent implements OnInit {
     this.getEntryDetails();
     this.getTradeCategories();
     this.placesOptions= {componentRestrictions:{country: 'AU'}};
+
+    // this._time_out = this.entryDetails?.time_out ?? this.entryDetails?.end_time;
+  }
+
+  set time_in(val){
+    this._time_in = val;
+  }
+  
+  get time_in(){
+    this.timeDifference = this.calcTimeDifference(this._time_in,this._time_out);
+    return this._time_in;
+  }
+
+  set time_out(val){
+    this._time_out = val;
+  }
+  
+  get time_out(){
+    this.timeDifference = this.calcTimeDifference(this._time_in,this._time_out);
+    return this._time_out;
+  }
+
+  set timeDifference(val){
+    this._timeDiff = val;
+  }
+
+  get timeDifference(){
+    return this._timeDiff;
+  }
+
+  get unallocatedTime(){
+    return (this.timeDifference > this.totalTaskTime)? this.calcTimeDifference(this.totalTaskTime,this.timeDifference): "";
+  }
+
+  calcTimeDifference(start:any, end:any){
+    const diff = this.timestrToSec(end) - this.timestrToSec(start);
+    return this.formatTime(diff);
+  }
+
+  updateClockIn(val:any){
+    this.time_in = val.target.value;
+    this.updateTimeInOut();
+  }
+
+  updateClockOut(val: any){
+    this.time_out = val.target.value;
+    this.updateTimeInOut();
   }
 
   getTradeCategories(){
@@ -81,7 +133,10 @@ export class EntryDetailsComponent implements OnInit {
     this.service.getEntryDetails(this.entryId).subscribe((res: any) => {
       if (res.status == true) {
         this.entryDetails = res.data;
-        this.getSumOfTaskTime(this.entryDetails.tasks)
+        this.getSumOfTaskTime(this.entryDetails.tasks);
+        this._time_in = this.datepipe.transform(this.entryDetails?.time_in ?? this.entryDetails?.start_time, 'HH:mm:ss') || "" ;
+        this._time_out = this.datepipe.transform(this.entryDetails?.time_out ?? this.entryDetails?.end_time, 'HH:mm:ss') || "" ;
+        this.timeDifference = this.calcTimeDifference(this._time_in,this._time_out);
       } else if (res.status == false) {
         this.toastr.error(res.message);
       }
@@ -117,7 +172,7 @@ export class EntryDetailsComponent implements OnInit {
   }
   
   timestrToSec = (timestr:any) => {
-    let parts = timestr.split(":");
+    let parts = timestr && timestr.split(":");
     return (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60) + (parseInt(parts[2]));
   }
   
@@ -144,6 +199,23 @@ export class EntryDetailsComponent implements OnInit {
     }
 
     this.service.updateEntryTime(data).subscribe((res: any) => {
+      if(res.status){
+        // this.toastr.success('Total Time Updated');
+      } else {
+        this.toastr.error(res.message);
+      }
+    })
+
+  }
+
+  updateTimeInOut(){
+    const data = {
+      entryId : this.entryId,
+      timeIn: `${this.entryDetails.start_Date}T${this.time_in}`,
+      timeOut: `${this.entryDetails.start_Date}T${this.time_out}`
+    }
+
+    this.service.updateTimeInOut(data).subscribe((res: any) => {
       if(res.status){
         // this.toastr.success('Total Time Updated');
       } else {
@@ -181,7 +253,6 @@ export class EntryDetailsComponent implements OnInit {
         this.toastr.error(res.message);
       }
     })
-
   }
   
   addtask(){

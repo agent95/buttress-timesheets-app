@@ -52,7 +52,6 @@ export class TimesheetComponent implements OnInit {
   clock() {
     if (localStorage.getItem("siteAddress") == null) {
       this.router.navigate(['/clock'])
-
     }
     else {
       if (localStorage.getItem("siteAddress") == "") {

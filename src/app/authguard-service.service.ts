@@ -147,6 +147,14 @@ export class AuthguardServiceService {
       catchError(this.handleError)
     );
   }
+
+  updateTimeInOut(detail: any): Observable<any> {
+    let header = new HttpHeaders({ "Authorization": "Bearer " + localStorage.getItem("token") });
+    const requestOptions = { headers: header };
+    return this.http.put(this.url + 'updateTimeInOut', detail, requestOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
   
 
   updateEntryDate(detail: any): Observable<any> {
