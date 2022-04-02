@@ -53,13 +53,13 @@
                 <!-- <img class="col-1"  src="assets/img/pin.svg" alt="">  -->
                 <span>Site Address</span>
                 <input ngx-google-places-autocomplete [options]="placesOptions" (onAddressChange)="handleAddressChange($event)" type="text" class="col form-control text-black shadow-none px-3"
-                placeholder="Enter Address" [value]="entryDetails?.site_address">
+                placeholder="Enter Address" [value]="entryDetails?.site_address || '' " placeholder="Please enter address">
               </div>
               
               <div class="col-6 mt-4 mb-2">
                 <span>Time In</span>
                 <div class="bg-light p-1 rounded-8 border border-2 text-center">
-                  <input type="time" step="1" autocomplete="off" class="px-2 text-theme2 form-control fs-16 border-0"
+                  <input type="time" step="60" autocomplete="off" class="px-2 text-theme2 form-control fs-16 border-0"
                       (focusout)="updateClockIn($event)" [value]="time_in">
                   <!-- <div class="fw-500 fs-24 d-block"> {{  entryDetails?.start_time | date:'mediumTime' }} </div> -->
                 </div>  
@@ -67,7 +67,7 @@
               <div class="col-6 mt-4 mb-2">
                 <span>Time Out</span>
                 <div class="bg-light p-1 rounded-8 border border-2 text-center">
-                  <input type="time" step="1" autocomplete="off" [placeholder]="entryDetails?.end_time" class="px-2 text-theme2 form-control fs-16 border-0"
+                  <input type="time" step="60" autocomplete="off" [placeholder]="entryDetails?.end_time" class="px-2 text-theme2 form-control fs-16 border-0"
                   (focusout)="updateClockOut($event)" [value]="time_out">
                   <!-- <div class="fw-500 fs-24 d-block">{{ entryDetails?.end_time | date:'hh:mm:ss'}} </div> -->
                 </div>
@@ -77,7 +77,7 @@
               <div class="col-12 mb-2">
                 <div class="bg-light px-3 rounded-8 border border-2 text-center">
                   <div class="row">
-                    <div class="fw-500 fs-24 d-block col text-start">Total</div>
+                    <div class="fw-500 fs-24 d-block col text-start">Total Hrs</div>
                     <div class="col text-end">
                       <span class="fw-500 fs-24 d-block">{{timeDiff}}</span>
                     </div>
@@ -85,14 +85,22 @@
                 </div>
               </div>
 
-              <div *ngIf="totalTaskTime > timeDiff" class="col-12 text-danger">
-                Allocated time is greater than Total time.
+              <div *ngIf="extraTime"  class="col-12 mb-2">
+                <div class="bg-light px-3 rounded-8 text-center">
+                  <div class="row">
+                    <div class="fw-500 fs-14 d-block col text-start text-danger">Allocated time is greater than Total hrs.</div>
+                    <div class="col text-end">
+                        <span class="fw-500 fs-24 d-block"><app-icon-plus></app-icon-plus>{{extraTime}}</span>
+                        <button class="btn btn-link" (click)="fixExtraTime()">Update</button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div *ngIf="unallocatedTime"  class="col-12 mb-2">
+              <div *ngIf="timeDiff > totalTaskTime"  class="col-12 mb-2">
                 <div class="bg-light px-3 rounded-8 text-danger">
                   <div class="row">
-                    <div class="fw-500 fs-24 d-block col text-start">Unallocated time</div>
+                    <div class="fw-500 fs-18 d-block col text-start">Unallocated time</div>
                     <div class="col">
                       <span class="fw-500 fs-24 d-block text-end">{{unallocatedTime}}</span>
                     </div>
@@ -111,7 +119,7 @@
                 <div>
                   <div class="row">
                       <div class="col-9">{{task?.tradeCategory}}  </div>
-                    <div *ngIf="!isFirst" class="col-3 text-end">
+                    <div class="col-3 text-end">
                       <!-- <span class="btn-link mx-2" role="button" title="Edit" data-bs-toggle="modal" data-bs-target="#editModal"><app-icon-edit></app-icon-edit></span>  -->
                       <span class="btn-link" role="button" title="Remove" (click)="removeTask(i)"><app-icon-minus></app-icon-minus></span>
                       <!-- <button type="button" role="button" class="btn-close fs-14 text-theme2 fw-600" title="Remove" aria-label="Remove"></button> -->
@@ -143,7 +151,7 @@
              <div class="col-12 mb-4">
               <div class="bg-light px-3 rounded-8 border border-2 text-center">
                 <div class="row">
-                  <div class="fw-500 fs-24 d-block col text-start">Allocated Time</div>
+                  <div class="fw-500 fs-18 d-block col text-start">Allocated Time</div>
                   <div class="col text-end">
                     <span class="fw-500 fs-24 d-block">{{totalTaskTime}}</span>
                   </div>
@@ -241,7 +249,7 @@
                     <div class="form-group position-relative text-start mb-3">
                       <label class="row fw-600 fs-16 mb-1" for="">
                         <span class="col-9 text-start">Time</span>
-                        <span class="col-3 text-end text-black-50">h:mm:ss</span>
+                        <span class="col-3 text-end text-black-50">h:mm</span>
                        </label>
                       <input class="form-control shadow-none p-2 fs-26 text-end" formControlName="taskTime" name="taskTime"
                         id="taskTime"/>

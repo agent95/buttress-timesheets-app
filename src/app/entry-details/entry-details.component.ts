@@ -25,14 +25,13 @@ export class EntryDetailsComponent implements OnInit {
   // NEW VARS
 
   sitename: string = "";
-  total_hrs: number = 10;
   taskSummary: any = [];
   entryId: any;
   date_today: any;
   entryDetails: any;
   tradeCategories: any;
   N: any;
-  totalTaskTime: string = "00:00:00";
+  totalTaskTime: string = "00:00";
   placesOptions: any;
   timeDiff: string = "";
   time_in: any;
@@ -59,7 +58,7 @@ export class EntryDetailsComponent implements OnInit {
   addTaskForm = new FormGroup({
     tradeCategory: new FormControl('No Trade Category'),
     taskDescription: new FormControl(''),
-    taskTime: new FormControl('0:00:00'),
+    taskTime: new FormControl('0:00'),
   });  
 
   ngOnInit(): void {
@@ -100,8 +99,22 @@ export class EntryDetailsComponent implements OnInit {
   //   return this._timeDiff;
   // }
 
+  get extraTime(){
+    return (this.totalTaskTime > this.timeDiff) ? this.calcTimeDifference(this.timeDiff,this.totalTaskTime) : 0;
+  }
+
   calcUnallocatedTime(){
     this.unallocatedTime = (this.timeDiff > this.totalTaskTime)? this.calcTimeDifference(this.totalTaskTime,this.timeDiff): "";
+  }
+
+  fixExtraTime(){
+
+    // console.log(this.timestrToSec(this.time_out),this.timestrToSec(this.extraTime), this.formatTime(sumTime));
+    const timeOut = new Date(`${this.entryDetails.start_Date}T${this.time_out}`).getTime();
+    const sumTime = new Date(timeOut + this.timestrToSec(this.extraTime)*1000);
+    this.time_out = this.datepipe.transform(sumTime,'HH:mm');
+
+    this.updateTimeInOut();
   }
 
   // reviewTotalTime(){
@@ -138,8 +151,8 @@ export class EntryDetailsComponent implements OnInit {
       if (res.status == true) {
         this.entryDetails = res.data;
         this.getSumOfTaskTime(this.entryDetails.tasks);
-        this.time_in = this.datepipe.transform(this.entryDetails?.time_in ?? this.entryDetails?.start_time, 'HH:mm:ss') || "" ;
-        this.time_out = this.datepipe.transform(this.entryDetails?.time_out ?? this.entryDetails?.end_time, 'HH:mm:ss') || "" ;
+        this.time_in = this.datepipe.transform(this.entryDetails?.time_in ?? this.entryDetails?.start_time, 'HH:mm') || "" ;
+        this.time_out = this.datepipe.transform(this.entryDetails?.time_out ?? this.entryDetails?.end_time, 'HH:mm') || "" ;
         this.timeDiff = this.calcTimeDifference(this.time_in,this.time_out);
         this.calcUnallocatedTime();
       } else if (res.status == false) {
@@ -159,26 +172,38 @@ export class EntryDetailsComponent implements OnInit {
   }
 
   getSumOfTaskTime(tasks: any){
-     if (this.entryDetails.tasks.length === 1){
-      this.totalTaskTime = this.entryDetails.total_working_hours;
-     } else {
-       let reducerFn = (acc:any, currentVal:any) => {
-         const currTime = this.timestrToSec(currentVal.taskTime);
-         const total = acc + currTime;
-         return total;
-        };
-       let time = tasks.reduce(reducerFn,0);
-       this.totalTaskTime =  this.formatTime(time);
+    //  if (this.entryDetails.tasks.length === 1){
+    //   this.totalTaskTime = this.entryDetails.total_working_hours;
+    //  } else {
+    //    let reducerFn = (acc:any, currentVal:any) => {
+    //      const currTime = this.timestrToSec(currentVal.taskTime);
+    //      const total = acc + currTime;
+    //      return total;
+    //     };
+    //    let time = tasks.reduce(reducerFn,0);
+    //    this.totalTaskTime =  this.formatTime(time);
 
-       if(this.entryDetails.total_working_hours !== this.totalTaskTime){
-         this.updateTotalhrs();
-       }
-     }; 
+    //    if(this.entryDetails.total_working_hours !== this.totalTaskTime){
+    //      this.updateTotalhrs();
+    //    }
+    //  }; 
+      let reducerFn = (acc:any, currentVal:any) => {
+        const currTime = this.timestrToSec(currentVal.taskTime);
+        const total = acc + currTime;
+        return total;
+      };
+      let time = tasks.reduce(reducerFn,0);
+      this.totalTaskTime =  this.formatTime(time);
+
+      if(this.entryDetails.total_working_hours !== this.totalTaskTime){
+        this.updateTotalhrs();
+      }
   }
   
   timestrToSec = (timestr:any) => {
     let parts = timestr && timestr.split(":");
-    return (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60) + (parseInt(parts[2]));
+    // return (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60) + (parseInt(parts[2]));
+    return (parseInt(parts[0]) * 3600) + (parseInt(parts[1]) * 60);
   }
   
   pad = (num:any) => {
@@ -192,7 +217,7 @@ export class EntryDetailsComponent implements OnInit {
   formatTime = (seconds:any) => {
     return [this.pad(Math.floor(seconds/3600)),
             this.pad(Math.floor(seconds/60)%60),
-            this.pad(seconds%60),
+            // this.pad(seconds%60),
             ].join(":");
   }
 
@@ -221,15 +246,15 @@ export class EntryDetailsComponent implements OnInit {
     }
 
     this.timeDiff = this.calcTimeDifference(this.time_in,this.time_out);
-        this.calcUnallocatedTime();
+    this.calcUnallocatedTime();
 
     this.service.updateTimeInOut(data).subscribe((res: any) => {
       if(res.status){
+        this.toastr.success('Updated');
       } else {
         this.toastr.error(res.message);
       }
     })
-
   }
 
   handleAddressChange(address: any) {
@@ -284,7 +309,7 @@ export class EntryDetailsComponent implements OnInit {
         this.addTaskForm.reset();
         this.addTaskForm.patchValue({
           tradeCategory: 'No Trade Category',
-          taskTime: '0:00:00'
+          taskTime: '0:00'
         })
         this.toastr.success('Updated');
       } else {

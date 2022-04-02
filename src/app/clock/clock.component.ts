@@ -322,7 +322,7 @@ export class ClockComponent implements OnInit {
   
   sendData(){
     const getTime = new Date().getTime();
-    const currentTIME = this.datepipe.transform(getTime, 'yyyy-MM-ddTHH:mm:ss');
+    const currentTIME = this.datepipe.transform(getTime, 'yyyy-MM-ddTHH:mm');
     const timezone = moment.tz.guess();
 
     const clockData = {

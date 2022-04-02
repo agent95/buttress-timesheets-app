@@ -18,12 +18,13 @@ export class ClockInComponent implements OnInit {
   siteName: any;
   siteTime: any;
   second: number = 0;
-  minute: string = '00:00:00';
+  minute: string = '00:00';
   hours: number = 0;
   time: boolean = true;
   clockoutvar: any;
   clockin: any;
-  totalhrs: string = "00:00:00";
+  counter: string = '00:00:00';
+  totalhrs: string = "00:00";
   N:any;
   note: any;
   comment: any;
@@ -58,7 +59,8 @@ export class ClockInComponent implements OnInit {
       // updating the time every second 
       start.setSeconds(start.getSeconds() + 1);
       // console.log('start: ', start)
-      this.minute = `${pad(start.getUTCHours())}:${pad(start.getUTCMinutes())}:${pad(start.getUTCSeconds())}`;
+      this.counter = `${pad(start.getUTCHours())}:${pad(start.getUTCMinutes())}:${pad(start.getUTCSeconds())}`;
+      this.minute = `${pad(start.getUTCHours())}:${pad(start.getUTCMinutes())}`;
     }, 1000)
     function pad(n: string | number) {
       return n < 10 ? '0' + n : '' + n;
@@ -130,7 +132,7 @@ export class ClockInComponent implements OnInit {
 
 
     const clockData = {
-      "end_time":this.datepipe.transform(clockoutvar, 'yyyy-MM-ddTHH:mm:ss'),
+      "end_time":this.datepipe.transform(clockoutvar, 'yyyy-MM-ddTHH:mm'),
       "total_working_hours":totalhrs,
       "tasks": taskSummary,
       "entryId": entry_id
