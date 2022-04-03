@@ -33,10 +33,10 @@ export class EntryDetailsComponent implements OnInit {
   N: any;
   totalTaskTime: string = "00:00";
   placesOptions: any;
-  timeDiff: string = "";
-  time_in: any;
-  time_out: any;
-  unallocatedTime: any;
+  timeDiff: string = "0:00";
+  time_in: any = "0:00";
+  time_out: any = "0:00";
+  unallocatedTime: string = "0:00";
 
   // time_in: any;
   // time_out: any;

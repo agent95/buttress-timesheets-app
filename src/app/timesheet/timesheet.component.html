@@ -7,7 +7,7 @@
           <a href="javascript:;"><img class="w-32px" src="assets/img/back-btn.svg" alt="" (click)="rout()"></a>
         </div> -->
         <div class="col text-center">
-          <h2 class="text-white fw-600 fs-18 mb-0">Timesheet</h2>
+          <h2 class="text-white fw-600 fs-18 mb-0">List of Entries</h2>
         </div>
       </div>
     </div>
@@ -36,23 +36,24 @@
               </form>
             </div>
             <div class="col-12 mt-4">
-              <div role="button" class="mb-3" *ngFor="let item of userDetails;let i=index;" (click)="sendtimesheet(item._id)">
-                <div class="col px-1 text-start">
-                  <span class="text-theme2 fs-16 fw-500"  >{{item.start_Date |date : 'd EE'}}</span>
-                </div>
-                <div class="bg-light rounded-4 border border-1 text-center">
+              <div role="button" class="mb-1" *ngFor="let item of userDetails;let i=index;" (click)="sendtimesheet(item._id)">
+                
+                <!-- <div class="col px-1 text-start">
+                  <span class="text-theme2 fs-16 fw-500"  >{{item.start_Date | date : 'd MMM'}}</span>
+                </div> -->
+                <div class="bg-light text-center">
                 <div class="row mx-0">
-                    <div class="col-12 p-2 border-bottom">
+                    <div class="col-2 py-2 border bg-black bg-opacity-10 rounded-4 d-flex flex-column justify-content-center">
+                      <span class="text-theme2 fs-16 fw-500"  >{{item.start_Date | date : 'd E MMM'}}</span>
+                    </div>
+                    <div class="col-10 p-2">
                       <div *ngIf="item.site_address" class="text-start text-black p-1 mb-1 border-bottom">{{item.site_address}}</div>
+                      <div *ngIf="!item.site_address" class="text-start text-black p-1 mb-1 border-bottom text-black-50">No Site Address</div>
                       <div class="align-items-center">
                         
                         <div class="col px-1 text-start">
                           <span class="text-theme2 fs-16 fw-500">Total : {{item.total_working_hours}}</span>
                         </div>
-                     
-                        <!-- <div class="col px-1">
-                          <span class="text-theme2 fs-16 fw-500"><i class="imgs img-chevron-right"></i></span>
-                        </div> -->
                       </div>
                     </div>
                   </div>

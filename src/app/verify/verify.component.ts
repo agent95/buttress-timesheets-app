@@ -97,7 +97,9 @@ export class VerifyComponent implements OnInit {
 
   var() {
     if (localStorage.getItem("token") == null) {
-      this.router.navigate(["/verify", this.store]);
+      // this.router.navigate(["/verify", this.store]);
+      this.router.navigate(['/sign-in',this.store])
+
     }
     else {
       this.router.navigate(['/index'])
